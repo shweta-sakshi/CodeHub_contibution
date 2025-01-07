@@ -203,25 +203,37 @@ function Navbar() {
                             <div className="absolute right-0 w-[11vw] bg-white text-black rounded-lg shadow-lg mt-2 z-50">
                                 <h1
                                     className="hover:bg-blue-200 px-2 py-2 cursor-pointer transition-colors duration-300 hover:text-primary"
-                                    onClick={() => navigate("/dashboard")}
+                                    onClick={() => {
+                                        navigate("/dashboard")
+                                        setDropdownOpen(false)
+                                    }}
                                 >
                                     Dashboard
                                 </h1>
                                 <h1
                                     className="hover:bg-blue-200 px-2 py-2 cursor-pointer transition-colors duration-300 hover:text-primary"
-                                    onClick={() => navigate("/education")}
+                                    onClick={() => {
+                                        navigate("/education")
+                                        setDropdownOpen(false)
+                                    }}
                                 >
                                     Education
                                 </h1>
                                 <h1
                                     className="hover:bg-blue-200 px-2 py-2 cursor-pointer transition-colors duration-300 hover:text-primary"
-                                    onClick={() => navigate("/leader-board")}
+                                    onClick={() => {
+                                        navigate("/leader-board")
+                                        setDropdownOpen(false)
+                                    }}
                                 >
                                     Leaderboard
                                 </h1>
                                 <h1
                                     className="hover:bg-red-200 px-2 py-2 cursor-pointer transition-colors duration-300 hover:text-red-500"
-                                    onClick={handleLogout}
+                                    onClick={() => {
+                                        handleLogout()
+                                        setDropdownOpen(false)
+                                    }}
                                 >
                                     Logout
                                 </h1>
