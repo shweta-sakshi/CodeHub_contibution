@@ -43,7 +43,7 @@ export default function Footer() {
   </div>
   <div className="footerTitle">
     <span>&#169; {year} CodeHub. All Rights Reserved.</span>
-    <br>
+    <br />
     <span><a href="https://github.com/adityarai0705/CodeHub/blob/main/LICENSE">LICENSE   </a></span>
     <span><a href="https://github.com/adityarai0705/CodeHub/blob/main/CODE_OF_CONDUCT.md">   CODE OF CONDUCT</a></span>
   </div>
@@ -75,4 +75,3 @@ export default function Footer() {
 
   )
 }
-
