@@ -43,6 +43,8 @@ export default function Footer() {
   </div>
   <div className="footerTitle">
     <span>&#169; {year} CodeHub. All Rights Reserved.</span>
+    <span><a href="https://github.com/adityarai0705/CodeHub/blob/main/LICENSE">LICENSE</a></span>
+    <span><a href="https://github.com/adityarai0705/CodeHub/blob/main/CODE_OF_CONDUCT.md">CODE OF CONDUCT</a></span>
   </div>
   <div className="LinkContainer">
     {/* <a href="mailto:computer.club@mnnit.ac.in" className="FooterLink">Contact Us</a> */}
