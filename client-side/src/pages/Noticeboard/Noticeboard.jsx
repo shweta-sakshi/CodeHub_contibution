@@ -23,18 +23,6 @@ function Notice(props) {
   );
 }
 
-// function CreateNotice(props) {
-//   return (
-//     <Notice
-//       key={props._id}
-//       title={props.title}
-//       date={props.date}
-//       body={props.body}
-//     />
-//   );
-// }
-
-
 export default function NoticeBoard() {
   const [PageHtml, setPageHtml] = useState(<>
     <NavSpace />
@@ -54,9 +42,6 @@ export default function NoticeBoard() {
       setPageHtml(<>
         <div>
           <div className="background-pink-blue" style={{ minHeight: '100vh' }}>
-            {/* <div id='navBarLandingPageContainer'>
-              <NavBarSecond />
-            </div> */}
             <NavSpace />
             <div className='notice-heading'>Notice Board</div>
             {noticeList.map((notice) => {
@@ -78,9 +63,6 @@ export default function NoticeBoard() {
     catch (err) {
       setPageHtml(
         <>
-          {/* <div id='navBarLandingPageContainer'>
-            <NavBarSecond />
-          </div> */}
           <NavSpace />
           <div className="background-pink-blue" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Alert heading={"Couldn't fetch data"} body={"Check your internet connection and try again.."} />

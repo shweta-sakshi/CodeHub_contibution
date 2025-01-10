@@ -135,7 +135,6 @@
     }
 
     .navChangedMain {
-        /* background-color: rgb(3, 3, 36); */
         height: 100vh;
         margin: 0;
         position: absolute;
@@ -162,10 +161,8 @@
     background: inherit;
     
     animation-iteration-count: 1;
-    /* animation-name: blurring; */
     animation-duration: 1s;
     animation: blurring 0.5s forwards;
-    /* <!--margin: 100px; according to your need--> */
 }
 
 @keyframes blurring {

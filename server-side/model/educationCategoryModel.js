@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+/**
+ * @desc Education Category Schema.
+ * All educational categories are stored here.
+ */
 const educationCategorySchema = new mongoose.Schema({
     title: {
         type: String,

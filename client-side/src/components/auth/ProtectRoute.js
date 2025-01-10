@@ -1,9 +1,11 @@
+/**
+ * @description: This file is used to protect the routes which are only accessible to the authenticated users.
+ */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { checkAuth } from '../../redux/slices/authSlice';
 import { Navigate } from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
-
 
 const ProtectedRoute = ({ children }) => {
     const { user, loading } = useSelector((state) => state.auth);

@@ -9,8 +9,6 @@ export default function NavBarSecond() {
     const navigate = useNavigate();
 
     //USER-LOGIN INFO
-    //   const {login,userCfID} = useContext(loginContext);
-    //   console.log(login)  
     const login = false;
     const userCfID = "";
 
@@ -87,10 +85,6 @@ export default function NavBarSecond() {
                         <li className='text-dg' onClick={() => navigate(process.env.REACT_APP_BASE_URL + "/leader-board")} >Leader Board</li>
                         <li className='text-dg' onClick={() => navigate(process.env.REACT_APP_BASE_URL + "/education")}>Education</li>
                         <li className='text-dg' onClick={() => navigate(process.env.REACT_APP_BASE_URL + "/notice-board")}>Notice Board</li>
-                        {/* <li onClick={() => navigate("/demoLink")}>Home</li>
-                        <li onClick={() => navigate("/demoLink")} >Leader Board</li>
-                        <li onClick={() => navigate("/demoLink")}>Education</li>
-                        <li onClick={() => navigate("/demoLink")}>Notice Board</li> */}
                     </ul>
                 </div>}
             </div >

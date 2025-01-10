@@ -5,7 +5,6 @@ import axios from 'axios';
 import NavSpace from '../../components/NavSpace';
 import Spinner from '../../components/Spinner/Spinner';
 import Alert from '../../components/Alert/Alert';
-// import NavBarSecond from '../../components/NavBar/NavBarSecond';
 import Footer from '../../components/Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -28,9 +27,6 @@ function LeaderUser(props) {
                         {props.name}
                     </span>
                 </div>
-                {/* <div className='leader-reg'>
-                    {props.regNo}
-                </div> */}
             </div>
         </div>
     );
@@ -92,8 +88,6 @@ export default function Leaderboard() {
     const updatePageHtml = async () => {
 
         try {
-
-            // const user = await JSON.parse(localStorage.getItem(process.env.CODETOGETHER_APP_LOCALHOST_KEY));
             const LeaderboardAPIresponse = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + '/leaderboard', { cfID: user.cfID }, { withCredentials: true });
             const userBoardInfo = LeaderboardAPIresponse.data.data;
             console.log(userBoardInfo)
@@ -104,9 +98,6 @@ export default function Leaderboard() {
             setPageHtml(<>
                 <div>
                     <div className="background-pink-blue">
-                        {/* <div id='navBarLandingPageContainer'>
-                            <NavBarSecond />
-                        </div> */}
                         <NavSpace />
                         <div className='leader-heading'>Leaderboard</div>
                         <p style={{'textAlign':'center'}}>Inactive participant's ratings are considered 0(zero).</p>
@@ -120,9 +111,6 @@ export default function Leaderboard() {
         } catch (err) {
             setPageHtml(
                 <>
-                    {/* <div id='navBarLandingPageContainer'>
-                        <NavBarSecond />
-                    </div> */}
                     <NavSpace />
                     <div className="background-pink-blue" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <Alert heading={"Couldn't fetch data"} body={"Check your internet connection and try again.."} />

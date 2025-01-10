@@ -1,5 +1,12 @@
 const ErrorHandler = require("./error_class")
 
+/**
+ * @function errorHandler
+ * @desc This middleware handles all the errors that are thrown in the application.
+ * @param {Object} err - The error object, default is set if err is null.
+ * @returns {Object} - Returns the error message and status code.
+ */
+
 const errorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.message = err.message || "Internal server error";
@@ -13,6 +20,7 @@ const errorHandler = (err, req, res, next) => {
     const message = `Internal Server Error [MongoDB]`;
     err = new Errorhandler(message, 500);
   }
+
   if (err.code === 8) {
     const message = `Unknown Error [MongoDB]`;
     err = new Errorhandler(message, 500);

@@ -1,20 +1,27 @@
+/**
+ * @module ForgetPassword.js
+ * @description Provides forget password related functionality.
+ *              Handles OTP generation, verification, and updating the newly created password.
+ */
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+
+const AsyncErrorHandler = require("../../../ErrorHandlers/async_error_handler");
 const Users = require("../../../model/userModel");
 const VerificationToken = require("../../../model/verificationTokenModel");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const AsyncErrorHandler = require("../../../ErrorHandlers/async_error_handler");
 const utils = require("../../../utils/auth/auth.utils");
 const sendEmail = require("../../../utils/auth/sendEmail");
 
 /**
- * Step 1: Generate and send OTP
+ * Step 1: Forget Password.
+ * @description Generates an OTP and sends it to the user's email.
+ * @param {string} email - The email of the user.
+ * @returns {Object} - Response object indicating the OTP generation status.
  */
 const ForgetPassword = AsyncErrorHandler(async (req, res, next) => {
     const { email } = req.body;
 
-    console.log("Received email:", email);
-
-    // Check if the user exists and email is verified
+    //Check if the user exists and email is verified
     const user = await Users.findOne({ email });
     if (!user || !user.emailVerified) {
         return res.status(404).json({
@@ -22,13 +29,13 @@ const ForgetPassword = AsyncErrorHandler(async (req, res, next) => {
             message: "User does not exist or email is not verified",
         });
     }
+    // Clear any existing password cookie.
     if(res.cookies?.PASSWORD){
         res.clearCookie('PASSWORD', { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite:process.env.NODE_ENV === "production" ? "none" : "lax" });
     }
     try {
-        // Remove any existing OTP token for this email
-        const deleteResult = await VerificationToken.deleteOne({ email, subject: "Password Change OTP" });
-        console.log("Deleted existing token:", deleteResult);
+        // Remove any existing OTP for this email.
+        await VerificationToken.deleteOne({ email, subject: "Password Change OTP" });
 
         // Generate OTP and save it
         const otp = utils.generateVerificationCode();
@@ -39,9 +46,7 @@ const ForgetPassword = AsyncErrorHandler(async (req, res, next) => {
         });
         await newToken.save();
 
-        console.log("New token saved:", newToken);
-
-        // Send the OTP to the user's email
+        // Send the OTP to the user's email.
         const emailContent = utils.createForgotPasswordEmail({
             resetCode: otp,
             subject: "Password Change OTP",
@@ -53,10 +58,10 @@ const ForgetPassword = AsyncErrorHandler(async (req, res, next) => {
         const passwordChangeToken = jwt.sign(
             { email, purpose: "Verify User" },
             process.env.COOKIE_SECRET_KEY,
-            { expiresIn: "15m" } // Token expires in 15 minutes
+            { expiresIn: "15m" } // Token expires in 15 minutes.
         );
 
-        // Set the token in a secure cookie
+        // Set the token in a secure cookie.
         res.cookie("PASSWORD", passwordChangeToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
@@ -69,10 +74,8 @@ const ForgetPassword = AsyncErrorHandler(async (req, res, next) => {
             message: "OTP sent to your email for password recovery",
         });
     } catch (error) {
-        console.error("Error handling ForgetPassword:", error);
-
         if (error.code === 11000) {
-            // Handle duplicate key error gracefully
+            // Handle duplicate key (OTP is generated multiple times for the same email) error gracefully.
             return res.status(500).json({
                 success: false,
                 message: "Duplicate key error. Try again later.",
@@ -87,12 +90,16 @@ const ForgetPassword = AsyncErrorHandler(async (req, res, next) => {
 });
 
 /**
- * Step 2: Verify OTP and generate a confirmation token
+ * Step 2: Verify OTP.
+ * @description Verifies the OTP and generates a temporary token for password change.
+ * @param {string} email - The email of the user.
+ * @param {string} otp - The OTP sent to the user's email.
+ * @returns {Object} - Response object indicating OTP validity.
  */
 const VerifyPasswordChangeOTP = AsyncErrorHandler(async (req, res, next) => {
     const { email, otp } = req.body;
 
-    // Validate OTP
+    // Verify the OTP.
     const token = await VerificationToken.findOne({ email, subject: "Password Change OTP", code: otp });
     if (!token) {
         return res.status(400).json({
@@ -111,6 +118,8 @@ const VerifyPasswordChangeOTP = AsyncErrorHandler(async (req, res, next) => {
     const passwordChangeToken = jwt.sign({ email, purpose: "Password Change" }, process.env.COOKIE_SECRET_KEY, {
         expiresIn: "15m", // Token expires in 15 minutes
     });
+
+    //Clear the existing password cookie and create the new one.
     res.clearCookie('PASSWORD', { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite:process.env.NODE_ENV === "production" ? "none" : "lax" });
     res.cookie("PASSWORD", passwordChangeToken, {
             httpOnly: true,
@@ -119,7 +128,7 @@ const VerifyPasswordChangeOTP = AsyncErrorHandler(async (req, res, next) => {
             maxAge: 15* 60 * 1000, // 15 minutes
         });
     
-    // Delete the OTP token after successful verification
+    // Delete the OTP after successful verification.
     await VerificationToken.findByIdAndDelete(token._id);
 
     return res.status(200).json({
@@ -129,13 +138,17 @@ const VerifyPasswordChangeOTP = AsyncErrorHandler(async (req, res, next) => {
 });
 
 /**
- * Step 3: Update password using confirmation token
+ * Step 3: Reset Password.
+ * @description Updates the user's password using the temporary token.
+ * @param {string} passwordChangeToken - The temporary token for password change.
+ * @param {string} newPassword - The new password to be set.
+ * @returns {Object} - response object indicating the operation's success or failure.
  */
 const ConfirmPasswordChange = AsyncErrorHandler(async (req, res, next) => {
     const { passwordChangeToken, newPassword } = req.body;
-    const { email, purpose } =passwordChangeToken;
-    console.log(passwordChangeToken)
-    console.log(newPassword)
+    const { email, purpose } = passwordChangeToken;
+
+    // Check if the token is for password change.
     if (purpose !== "Password Change") {
         return res.status(400).json({
             success: false,
@@ -159,6 +172,7 @@ const ConfirmPasswordChange = AsyncErrorHandler(async (req, res, next) => {
     // Update the user's password
     user.password = hashedPassword;
     await user.save();
+    //Clear the password cookie after successful password change.
     res.clearCookie('PASSWORD', { httpOnly: true, secure: true, sameSite: 'Strict' });
     return res.status(200).json({
         success: true,

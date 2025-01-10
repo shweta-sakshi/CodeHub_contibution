@@ -44,30 +44,6 @@
     }
 }
 
-/* .VerdictContainer{
-    width: 100vw;
-    height: 40vw;
-    display: flex;
-    justify-content: center;
-}
-
-.VerdictLegendItems{
-    text-align: left;
-    font-size: small;
-    font-weight: bold;
-}
-
-@media screen and (max-width: 660px) {
-    .VerdictContainer{
-        width: 100vw;
-        height: 80vw;
-        justify-content: flex-start;
-        flex-direction: column;
-    }
-} */
-
-
-
 .VerdictContainer {
     width: 100vw;
     height: 40vw;

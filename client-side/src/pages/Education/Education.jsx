@@ -41,7 +41,6 @@ export default function Education() {
     const updatePageHtml = async () => {
 
         try {
-            // const user = await JSON.parse(localStorage.getItem(process.env.CODETOGETHER_APP_LOCALHOST_KEY));
             const EducationAPIresponse = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + '/education', { cfID: user.cfID }, { withCredentials: true });
             const EducationInfo = EducationAPIresponse.data.data;
             const EducationComponent = EducationInfo.map((category, index) => <EduSection key={index} title={category.title} _id={category._id} redirectToVideos={redirectToVideos}/>)

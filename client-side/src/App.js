@@ -1,3 +1,6 @@
+/**
+ * @desc It contains all the frontend routes of the application.
+ */
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -16,19 +19,17 @@ import ProtectedRoute from './components/auth/ProtectRoute';
 import Navbar from './components/NavBar/NavBar';
 import { AuthWrapper } from './lib/AuthWrapper';
 import ForgotPassword from './pages/SignUp/ForgetPassword';
+
 export default function App() {
-
-
     return (
-
         <BrowserRouter>
+            // AuthWrapper is a custom component that wraps the entire application and provides authentication context to all the child components.
             <AuthWrapper>
                 <Navbar />
                 <Routes>
                     <Route path={"/"} element={<LandingPage />} />
                     <Route path={"/login"} element={<LoginPage />} />
                     <Route path={"/signUp"} element={<Signup />} />
-                    {/* Route for Forgot Password */}
                     <Route path={"/forgot-password"} element={<ForgotPassword />} />
 
                     <Route path={"/verify-email"} element={<VerifyEmail />} />

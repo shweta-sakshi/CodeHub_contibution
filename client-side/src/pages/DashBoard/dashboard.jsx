@@ -217,7 +217,6 @@ export default function UserHome() {
                                 <PerformanceIndex ratingdata={userRating.data} />
                                 <SubmissionVerdict verdictdata={userSubmissionVerdict} />
                                 <ProblemRating questionratingdata={userSubmissionRating} />
-                                {/* <Languages languagedata={userLanguage} /> */}
                             </div>
                             <div>
                                 <ContestDetails contestData={userRating.data} />

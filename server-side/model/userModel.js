@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+/**
+ * @model User Schema.
+ * All client user data is stored here.
+ */
 const userSchema = new mongoose.Schema({
     cfID: {
         type: String,

@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+/**
+ * @model Video Schema.
+ * stores all video data with their category.
+ */
 const videoSchema = new mongoose.Schema({
     categoryID: {
         type: String,

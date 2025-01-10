@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+/**
+ * @model Verification Token Schema.
+ * @desc Verification tokens are stored here until they expire.
+ */
 const VerificationTokenSchema = new mongoose.Schema({
   email: {
     type: String,

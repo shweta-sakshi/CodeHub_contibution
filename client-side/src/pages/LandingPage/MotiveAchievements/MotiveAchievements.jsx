@@ -4,38 +4,6 @@ import { Timeline } from '../../../components/ui/timeline'
 import objectivesImg from "../../../assets/objectives.png"
 
 export default function MotiveAchievements() {
-
-    // ACHIEVEMENTS TESTING DATA
-    /* const achievmentsData = [{
-        eventName: "Chicago State Event",
-        date: "July, 2022",
-        rank: "Rank 1"
-    }, {
-        eventName: "Art of Coding",
-        date: "August, 2022",
-        rank: "Rank 2"
-    }, {
-        eventName: "Australia Olympiad Event",
-        date: "September, 2022",
-        rank: "Rank 3"
-    }, {
-        eventName: "IIT Bombay Fest",
-        date: "October, 2022",
-        rank: "Rank 4"
-    }, {
-        eventName: "New York State Event",
-        date: "November, 2022",
-        rank: "Rank 5"
-    }, {
-        eventName: "Research for Life",
-        date: "November, 2022",
-        rank: "Rank 6"
-    }, {
-        eventName: "Trio Maniac",
-        date: "November, 2022",
-        rank: "Rank 7"
-    }]; */
-
     const objectives = [
         {
             "title": "Building a Strong Coding Community",

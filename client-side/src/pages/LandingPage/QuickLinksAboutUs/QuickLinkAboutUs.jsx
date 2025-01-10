@@ -15,23 +15,6 @@ export default function QuickLinkAboutUs() {
     const navigate = useNavigate();
 
     const linkContainer = useRef();
-
-    // useGSAP(() => {
-    //         gsap.from('#aa', {
-    //             x: window.innerWidth,
-    //             scrollTrigger: {
-    //                 trigger: "#aboutContainer",
-    //                 // scrub: 1,
-    //                 markers: true,
-    //                 start: "top 30%",
-    //                 end: "top 70%"
-    //             }
-    //         });
-            
-    //     },
-    //     { scope: linkContainer }
-    // ); 
-    
     return (
         <div id='quickLinksAboutUsMain'>
             <div style={{ height : '15vh'}}></div>
