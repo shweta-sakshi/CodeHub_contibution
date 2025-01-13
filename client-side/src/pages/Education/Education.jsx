@@ -16,10 +16,10 @@ import './Education.css';
 
 // Function to display the category of videos available for learning.
 function EduSection(props) {
-    const  _id = props._id;
+    const _id = props._id;
     return (
         <div>
-            <div className="super-box" onClick={()=>props.redirectToVideos(props.title)}>
+            <div className="super-box" onClick={() => props.redirectToVideos(props.title)}>
                 <div className="edu-box">
                     <div className="edu-title">{props.title}</div>
                 </div>
@@ -31,7 +31,7 @@ function EduSection(props) {
 export default function Education() {
 
     const navigate = useNavigate(); // For navigation to other routes.
-    const {user}= useSelector((state)=> state.auth); // To get the user details from the redux store.
+    const { user } = useSelector((state) => state.auth); // To get the user details from the redux store.
 
     // PageHtml is the state variable.
     const [PageHtml, setPageHtml] = useState(<>
@@ -50,7 +50,7 @@ export default function Education() {
             // Fetching the categories available for learning.
             const EducationAPIresponse = await axios.post(process.env.REACT_APP_SERVER_BASE_URL + '/education', { cfID: user.cfID }, { withCredentials: true });
             const EducationInfo = EducationAPIresponse.data.data;
-            const EducationComponent = EducationInfo.map((category, index) => <EduSection key={index} title={category.title} _id={category._id} redirectToVideos={redirectToVideos}/>)
+            const EducationComponent = EducationInfo.map((category, index) => <EduSection key={index} title={category.title} _id={category._id} redirectToVideos={redirectToVideos} />)
 
             // Setting the page html.
             setPageHtml(<>
@@ -89,7 +89,7 @@ export default function Education() {
         updatePageHtml();
     }, []);
 
-// Returning the JSX of the Education
+    // Returning the JSX of the Education
     return (
         <>
             {PageHtml}

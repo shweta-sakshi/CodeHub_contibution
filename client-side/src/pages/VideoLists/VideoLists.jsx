@@ -44,7 +44,7 @@ export default function VideoLists(props) {
 
             //fetch videos.
             const user = await JSON.parse(localStorage.getItem(process.env.CODETOGETHER_APP_LOCALHOST_KEY));
-            const VideoAPIresponse = await axios.post(process.env.REACT_APP_SERVER_PATH + '/education/videos', { categoryID : educationCategory , cfID: user.cfID }, { withCredentials: true });
+            const VideoAPIresponse = await axios.post(process.env.REACT_APP_SERVER_PATH + '/education/videos', { categoryID: educationCategory, cfID: user.cfID }, { withCredentials: true });
             const VideoInfo = VideoAPIresponse.data.data;
 
             //format the fetched videos according to the VideoTile component.
@@ -89,7 +89,7 @@ export default function VideoLists(props) {
         updatePageHtml();
     }, []);
 
-//return the page html.
+    //return the page html.
     return (
         <>
             {PageHtml}
