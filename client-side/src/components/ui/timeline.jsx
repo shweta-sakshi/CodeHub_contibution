@@ -1,13 +1,19 @@
+/**
+ * @fileoverview timeline component -Displays a user's timeline with sticky elements and animated progress.
+ * @purpose To display motive of the CodeHub.
+ */
 import { useScroll, useTransform, motion } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 
 export const Timeline = ({
   data
 }) => {
+
   const ref = useRef(null);
   const containerRef = useRef(null);
   const [height, setHeight] = useState(0);
 
+  // Measure the height of the timeline when the component mounts
   useEffect(() => {
     if (ref.current) {
       const rect = ref.current.getBoundingClientRect();
@@ -15,6 +21,7 @@ export const Timeline = ({
     }
   }, [ref]);
 
+  // Use the scrollYProgress to animate the progress bar.
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 10%", "end 50%"],
@@ -27,8 +34,13 @@ export const Timeline = ({
     (<div
       className="w-full font-sans"
       ref={containerRef}>
+
+      {/* Timeline */}
       <div ref={ref} className=" relative md:max-w-[90%] md:px-10  md:mx-auto pb-20">
+
+        {/* Timeline items */}
         {data.map((item, index) => (
+            //each timeline item format.
           <div key={index} className="flex justify-start pt-10 md:pt-40 md:gap-10">
             <div
               className="sticky flex flex-col md:flex-row  items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
@@ -54,6 +66,8 @@ export const Timeline = ({
             </div>
           </div>
         ))}
+
+        // Progress bar
         <div
           style={{
             height: height + "px",
@@ -66,6 +80,7 @@ export const Timeline = ({
             }}
             className="absolute inset-x-0 top-0  w-[2px] bg-gradient-to-t from-yellow-500 via-blue-500 to-white from-[5%] via-[10%]  to-[60%] rounded-full" />
         </div>
+
       </div>
     </div>)
   );

@@ -1,13 +1,18 @@
+/**
+ * @fileoverview To verify the OTP sent to the user's email - step 2 of the forget password process.
+ */
 import React, { useState, useEffect } from "react";
 import API from "../../api/forgetPassword";
 
 function VerifyOTP({ onNext, toast, email }) {
+    // State variables
     const [otp, setOtp] = useState("");
     const [loading, setLoading] = useState(false);
     const [timer, setTimer] = useState(300); // 5 minutes in seconds
     const [resendDisabled, setResendDisabled] = useState(true);
-    const api = new API();
+    const api = new API();// create an instance of the API class
 
+    // Timer to resend OTP.
     useEffect(() => {
         let interval;
         if (timer > 0) {
@@ -20,6 +25,7 @@ function VerifyOTP({ onNext, toast, email }) {
         return () => clearInterval(interval);
     }, [timer]);
 
+    // handle resend OTP button.
     const handleResend = async () => {
         setResendDisabled(true);
         setTimer(300); // Reset timer to 5 minutes
@@ -35,6 +41,7 @@ function VerifyOTP({ onNext, toast, email }) {
         }
     };
 
+    // handle submit button..
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -53,6 +60,7 @@ function VerifyOTP({ onNext, toast, email }) {
         }
     };
 
+    // Format time in MM:SS
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
         const secs = seconds % 60;
@@ -61,7 +69,10 @@ function VerifyOTP({ onNext, toast, email }) {
 
     return (
         <div className="max-w-md w-full mx-auto rounded-lg p-6 shadow-2xl bg-[#121232]">
+            {/* title */}
             <h1 className="text-3xl font-bold text-center mb-6">Verify OTP</h1>
+
+            {/* Resend OTP  timer */}
             <div className="flex justify-between items-center mb-4">
                 <p className="text-sm text-gray-400">Resend OTP in: {formatTime(timer)}</p>
                 <button
@@ -72,7 +83,11 @@ function VerifyOTP({ onNext, toast, email }) {
                     Resend OTP
                 </button>
             </div>
+
+            {/* OTP form */}
             <form onSubmit={handleSubmit}>
+
+                {/* OTP input */}
                 <div className="mb-4">
                     <label className="block text-sm font-semibold mb-2">Enter OTP</label>
                     <input
@@ -84,6 +99,8 @@ function VerifyOTP({ onNext, toast, email }) {
                         required
                     />
                 </div>
+
+                {/* Submit button */}
                 <button
                     type="submit"
                     className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded transition"
@@ -91,6 +108,7 @@ function VerifyOTP({ onNext, toast, email }) {
                 >
                     {loading ? "Verifying..." : "Verify OTP"}
                 </button>
+                
             </form>
         </div>
     );

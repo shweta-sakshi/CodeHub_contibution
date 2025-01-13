@@ -16,7 +16,8 @@ const errorHandler = require("./ErrorHandlers/error_handler");
 const app = express();
 require("dotenv").config();
 
-// Middleware.
+/*------------------- Middlewares------------------- */
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("📋[server-log]: :method :url :status :response-time ms"));//logs details about each incoming HTTP request.

@@ -1,5 +1,9 @@
+/**
+ * @fileoverview Hamburger menu component for small screens.
+ */
 import { useState, useRef, useEffect } from "react";
-import Hamburger from "hamburger-react";
+import Hamburger from "hamburger-react"; //menu icon
+
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/slices/authSlice"; 
@@ -12,20 +16,23 @@ const HamburgerMenu = () => {
   const auth = useSelector((state) => state.auth.user);
   const dropdownRef = useRef(null);
 
+  // Toggle menu
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  // Toggle dropdown of profile.
   const handleProfileClick = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
+  // Logout the user and navigate to login page.
   const handleLogout = () => {
     dispatch(logout());
     window.location.href = "/login";
   };
 
-  // Close dropdown when clicking outside
+  // Close dropdown when clicking outside the dropdown area.
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -43,12 +50,15 @@ const HamburgerMenu = () => {
   }, []);
 
   return (
+
     <div className="relative ">
+      {/* menu icon */}
       <div
         className={`bg-opacity-[70%] rounded-xl ${
           isOpen ? "fixed" : "absolute right-4"
         } z-[90] right-4`}
       >
+
         <Hamburger
           toggled={isOpen}
           toggle={toggleMenu}
@@ -84,6 +94,7 @@ const HamburgerMenu = () => {
             </li>
           </ul>
 
+          {/* Additional profile menu if the user is authenticated, otherwise show the login button */}
           {auth ? (
             <div
               ref={dropdownRef}

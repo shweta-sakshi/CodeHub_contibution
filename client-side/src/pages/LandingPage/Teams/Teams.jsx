@@ -1,18 +1,26 @@
+/**
+ * @fileoverview provide information about the teams in the CodeHub.
+ */
 import React from 'react';
-import "./Teams.css";
 import { useNavigate } from 'react-router-dom';
+
+import "./Teams.css";
 
 export default function Teams() {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate();// For navigation to other routes.
     
     return (
         <div id='teams1Main'>
             <div id='teams2Main'>
                 <div id='teams3Main'>
+
+                    {/*Title*/}
                     <div id='teamsTitleMain'>
                         Teams
                     </div>
+
+                    {/* team and its links for more information */}
                     <div id='teamsFlexContainer'>
                         <div id='teamsContentMain'>
                             <div onClick={() => navigate("/demoLink")} className='teamContentBoxesMain'>
@@ -29,6 +37,7 @@ export default function Teams() {
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

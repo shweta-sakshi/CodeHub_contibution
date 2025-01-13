@@ -1,13 +1,12 @@
 /**
- * @file index.js.
- * @description This file is the entry point of the client-side application.
+ * @file index.js is the root file for the client side application.
  */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
-
+import { PersistGate } from 'redux-persist/integration/react'; //To persist and rehydrate a redux store from any container component.
+import { Provider } from 'react-redux'; //Make the store available to all container components.
 import { store, persistor } from './redux/store';
+
 import './index.css';
 import App from './App';
 

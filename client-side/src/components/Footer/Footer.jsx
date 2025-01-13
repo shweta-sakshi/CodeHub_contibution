@@ -1,11 +1,23 @@
 import React from 'react';
+
 import './Footer.css';
+import Contributors from './Contributors';
 import NiTLogo from './mnnit_logo.png';
 import CTLogo from './logo_half.png';
-import Contributors from './Contributors';
+
+/**
+ * @description This component is used to render the footer of the Project.
+ * It displays the following information:
+ *              - CodeHub and MNNIT logo.
+ *              - list of contributors to the project.
+ *              - copyright information.
+ *              - contribution link to the GitHub repository.
+ */
 export default function Footer() {
   const today = new Date();
   const year = today.getFullYear();
+
+  // List of all contributors and their LinkedIn profile link.
   const contributors = [
     { name: 'Aditya Raj Rai', link: 'https://www.linkedin.com/in/link-aditya-rai/' },
     { name: 'Mrinal Varshney', link: 'https://www.linkedin.com/in/mrinal-varshney-971a27250/' },
@@ -21,19 +33,28 @@ export default function Footer() {
     { name: 'Janhavi Rai', link: 'https://www.linkedin.com/in/janhavi-rai24/' },
     { name: 'Nishant Mohan', link: 'https://www.linkedin.com/in/nishant-mohan-58931927a/' },
   ];
+
   return (
 <footer className="FooterContainer">
+
+  {/*Logos and labels*/}
   <div className="footerLogo">
     <img className= "ct_logo" src={CTLogo} alt="CodeHub Logo" />
     <img className= "nit_logo" src={NiTLogo} alt="Motilal Nehru National Institute of Technology Logo" />
     <span className="mnnitLabel">MNNIT</span>
   </div>
+
+    {/*Copywrite Information*/}
   <div className="footerTitle">
     <span>&#169; {year} CodeHub. All Rights Reserved.</span>
   </div>
+
   <div className="LinkContainer">
   </div>
+
   <hr className="sectionDivider" />
+
+    {/*Contribution link*/}
     <div className='additionalInfo'>
       <div className='contributors'>
       <h3>Do you wish to contribute to CodeHub?</h3>
@@ -49,13 +70,16 @@ export default function Footer() {
         <button className="contributeButton">Visit CodeHub on GitHub</button>
       </a>
     </div>
+
     <hr className="sectionDivider " />
+
+    {/*List of all Contributors with their LinkedIn profile link*/}
     <p className='mt-10'><b>Contributors</b></p>
       <Contributors contributors={contributors}/>
     <br/>
   </div>
-</footer>
 
+</footer>
   )
 }
 

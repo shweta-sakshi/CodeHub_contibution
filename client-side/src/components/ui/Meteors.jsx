@@ -1,12 +1,19 @@
 import React from "react";
+
 import { cn } from "../../lib/utils";
 
+/**
+ * @description This component used to add a dynamic and visually appealing meteor effect.
+ * @param {number} number - Number of meteors to be displayed.
+ * @param {string} className - Additional classes to be added.
+ */
 export const Meteors = ({
   number,
   className
 }) => {
   const meteors = new Array(number || 20).fill(true);
   return (<>
+    {/* Dynamically position and animate each meteor with varying delay and duration. */}
     {meteors.map((el, idx) => (
       <span
         key={"meteor" + idx}
@@ -20,7 +27,9 @@ export const Meteors = ({
           left: Math.floor(Math.random() * (400 - -400) + -400) + "px",
           animationDelay: Math.random() * (0.8 - 0.2) + 0.2 + "s",
           animationDuration: Math.floor(Math.random() * (10 - 2) + 2) + "s",
-        }}></span>
+        }}
+
+      ></span>
     ))}
   </>);
 };

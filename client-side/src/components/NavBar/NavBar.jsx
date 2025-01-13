@@ -1,9 +1,12 @@
-
+/**
+ * @fileoverview Navbar component for the application.
+ */
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 import CodeHubLogo from "./Assets/Logos/CodeHubSmall.png";
 import HamburgerMenu from "./HamburgerMenu";
-import { useSelector, useDispatch } from "react-redux";
-import { useState, useRef, useEffect } from "react";
 import { logout } from "../../redux/slices/authSlice";
 
 function Navbar() {
@@ -13,23 +16,25 @@ function Navbar() {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
 
+    // Navigate to landing page when logo is clicked.
     const handleLogoClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
         navigate("/");
     };
 
+    // Logout the user and navigate to login page.
     const handleLogout = async() => {
-        console.log("Inside HandleLogout navbar");
         await dispatch(logout()); 
         navigate("/login"); 
     };
 
+    // Toggle dropdown when clicked.
     const handleDropdownToggle = () => {
         setDropdownOpen(!dropdownOpen);
     };
 
-    // Close dropdown if clicked outside
+    // Close dropdown if clicked outside the dropdown area.
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -44,13 +49,17 @@ function Navbar() {
 
     return (
         <>
+            {/* Navbar for large screens */}
             <div className="w-[100vw] bg-primary custom1980:h-[92px] md:h-[60px] px-8 py-2 fixed bg-scheduleLargeText items-center justify-between z-50 md:flex hidden">
+
+                {/* Logo of CodeHub */}
                 <img
                     src={CodeHubLogo}
                     className="logo hover:cursor-pointer w-auto h-10 object-contain bg-transparent"
                     onClick={handleLogoClick}
                 />
 
+                {/* Navigation links */}
                 <div className="text-white navlinks w-[67%] flex h-full items-center justify-between font-bebas md:text-[1.6vw]">
                     <h2
                         className="hover:text-accent tracking-widest transition-colors cursor-pointer duration-300"
@@ -72,6 +81,7 @@ function Navbar() {
                     </h2>
                 </div>
 
+                {/*Additional profile menu if the user is authenticated, otherwise show the login button */}
                 {auth ? (
                     <div className="relative" ref={dropdownRef}>
                         <button
@@ -119,9 +129,11 @@ function Navbar() {
                 )}
             </div>
 
+            {/* Navbar for small screens */}
             <div className="w-screen h-auto -top-[15px] flex items-center justify-end z-50 md:hidden">
                 <div className="bg-primary w-full h-24 absolute md:hidden"></div>
                 <div className="z-30">
+                    {/*logo of CodeHub*/}
                     <img
                         src={CodeHubLogo}
                         className="logo absolute left-2 logo hover:cursor-pointer w-auto h-10"
@@ -129,9 +141,11 @@ function Navbar() {
                     ></img>
                 </div>
                 <div>
+                    {/* menu component for small screens */}
                     <HamburgerMenu />
                 </div>
             </div>
+
         </>
     );
 }

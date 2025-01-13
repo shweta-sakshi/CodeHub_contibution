@@ -1,16 +1,19 @@
+/**
+ * @fileoverview Noticeboard page of the website.
+ */
 import React, { useEffect, useState } from 'react';
-import '../pages.css';
-import './Noticeboard.css';
-import NavBarSecond from '../../components/NavBar/NavBarSecond';
+import axios from 'axios';
+
 import NavSpace from '../../components/NavSpace';
 import Spinner from '../../components/Spinner/Spinner';
 import Alert from '../../components/Alert/Alert';
-import axios from 'axios';
 import Footer from '../../components/Footer/Footer';
+import '../pages.css';
+import './Noticeboard.css';
 
 
 
-//notice format
+//notice format to be displayed.
 function Notice(props) {
   return (
     <div>
@@ -29,16 +32,15 @@ export default function NoticeBoard() {
     <Spinner />
   </>);
 
+  //to update the page html with the fetched data or error message.
   const updatePageHtml = async () => {
 
     try {
+      //fetching the all notice from the server.
       const NoticeboardAPIresponse = await axios.get(process.env.REACT_APP_SERVER_PATH + '/noticeboard');
       const noticeList = NoticeboardAPIresponse.data.data;
 
-      // data is loaded.
-      console.log(noticeList);
-
-
+        //updating the page html with the fetched data.
       setPageHtml(<>
         <div>
           <div className="background-pink-blue" style={{ minHeight: '100vh' }}>
@@ -61,6 +63,8 @@ export default function NoticeBoard() {
       </>);
     }
     catch (err) {
+
+      //updating the page html with the error message.
       setPageHtml(
         <>
           <NavSpace />
@@ -71,12 +75,12 @@ export default function NoticeBoard() {
       );
     }
   }
-  useEffect(() => {
 
+  useEffect(() => {
     updatePageHtml();
   }, []);
 
-
+// rendering the page html.
   return (
     <>{PageHtml}</>
   );

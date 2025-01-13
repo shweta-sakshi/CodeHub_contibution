@@ -1,3 +1,6 @@
+/**
+ *@description: This file contains the css for the NavBarSecond component.
+ */
 @media only screen and (min-width: 800px) {
     #navBar2Main {
         display: none;

@@ -76,7 +76,6 @@ async function handleRegister({ username, cfID, email, password }) {
 
     } catch (error) {
         //Error handling.
-        console.log("Signup Error:", error.response);
         return {
             success: false,
             message: error.response?.data?.message || error.message || "An unknown error occurred",

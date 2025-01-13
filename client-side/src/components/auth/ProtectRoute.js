@@ -1,5 +1,5 @@
 /**
- * @description: This file is used to protect the routes which are only accessible to the authenticated users.
+ * @description: This file is used to protect the routes and redirect the user to the login page if the user is not authenticated.
  */
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,10 +8,12 @@ import { Navigate } from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
 
 const ProtectedRoute = ({ children }) => {
-    const { user, loading } = useSelector((state) => state.auth);
-    const [initializing, setInitializing] = useState(true);
-    const dispatch = useDispatch();
 
+    const { user, loading } = useSelector((state) => state.auth); // Get the user and loading state from the store.
+    const [initializing, setInitializing] = useState(true);
+    const dispatch = useDispatch(); //
+
+    // Check if the user is authenticated.
     useEffect(() => {
         async function check() {
             if (!loading) {
@@ -25,6 +27,7 @@ const ProtectedRoute = ({ children }) => {
         check();
     }, []);
 
+    // Show Spinner while authentication check is in progress.
     if (initializing) {
         return (
             <div>
@@ -33,10 +36,12 @@ const ProtectedRoute = ({ children }) => {
         );
     }
 
+    // If the user is not authenticated, redirect to the login page.
     if (!user) {
         return <Navigate to="/login" replace />;
     }
 
+    // If the user is authenticated, return the children components.
     return children;
 };
 

@@ -1,6 +1,11 @@
+/**
+ * @fileoverview Displays the user details on the user profile page.
+ */
 import React from "react";
 
 export default function UserProfile({ name, rank, image, userDetail }) {
+
+  // define rank styles for different ranks.
   const rankStyles = {
     newbie: {
       bg: "bg-gray-800",
@@ -61,6 +66,7 @@ export default function UserProfile({ name, rank, image, userDetail }) {
 
   const style = rankStyles[rank] || rankStyles.unrated;
 
+  //Array of user details with labels and data.
   const details = [
     { label: "Name", data: userDetail.name },
     { label: "Handle", data: userDetail.handle },
@@ -99,8 +105,9 @@ export default function UserProfile({ name, rank, image, userDetail }) {
 
       </div>
 
-      {/* Details Section */}
+      {/* User details and highest rank section */}
       <div className="mt-12 space-y-8 w-full max-w-4xl">
+
         {/* Highest Rank */}
         <div className="bg-gray-900 shadow-md border-2 border-white rounded-lg p-6 flex justify-between items-center">
           <div className="text-lg font-bold text-gray-100">Highest Rank</div>
@@ -111,7 +118,7 @@ export default function UserProfile({ name, rank, image, userDetail }) {
           </div>
         </div>
 
-        {/* User Info Boxes */}
+        {/* User Detail section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {details.map((detail, index) => (
             <div

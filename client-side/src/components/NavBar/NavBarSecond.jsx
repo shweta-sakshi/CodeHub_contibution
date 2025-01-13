@@ -1,9 +1,12 @@
-import React, { useState, useContext } from 'react'
+/**
+ * @fileoverview Navbar for few components.
+ */
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import "./NavBar.css";
 import CodeTogetherSingleLine from "./Assets/Logos/CodeHubLarge.png";
 import CodeTogetherLogo from "./Assets/Logos/CodeTogetherLogo.png";
-import { useNavigate } from 'react-router-dom';
-
 
 export default function NavBarSecond() {
     const navigate = useNavigate();

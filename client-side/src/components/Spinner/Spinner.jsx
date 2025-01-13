@@ -1,3 +1,6 @@
+/**
+ * @fileoverview loading spinner component to show ongoing process.
+ */
 import React from 'react';
 import './Spinner.css';
 import spinner from './spinner.png';

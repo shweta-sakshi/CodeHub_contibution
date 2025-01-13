@@ -1,3 +1,6 @@
+/**
+ * @fileoverview Question rating graph component that visualizes the number of problems solved based on their rating.
+ */
 import React from 'react';
 import {
   ResponsiveContainer,
@@ -11,7 +14,8 @@ import {
 } from 'recharts';
 
 export default function QuestionRatingGraphs({ questionratingdata }) {
-  // Filter out data with zero values
+
+    // Filter out data with zero values
   const questionRatingDataFiltered = questionratingdata.filter((data) => data.uv !== 0);
 
   return (
@@ -22,6 +26,7 @@ export default function QuestionRatingGraphs({ questionratingdata }) {
         marginBottom: '20px',
       }}
     >
+
       {/* Title */}
       <h4
         style={{
@@ -35,10 +40,14 @@ export default function QuestionRatingGraphs({ questionratingdata }) {
         Solved Problems (Rating)
       </h4>
 
-      {/* Chart */}
+      {/* Chart  container : make chart responsive */}
       <ResponsiveContainer width="100%" height={400}>
+
         <BarChart data={questionRatingDataFiltered}>
+
           <CartesianGrid stroke="#475569" strokeDasharray="3 3" />
+
+            {/* X-axis for rating names */}
           <XAxis
             dataKey="name"
             tick={{ fill: '#A5B4FC', fontWeight: 'bold', fontSize: 12 }}
@@ -50,6 +59,8 @@ export default function QuestionRatingGraphs({ questionratingdata }) {
             }}
             height={50} // Add more height for better separation
           />
+
+            {/* Y-axis for number of problems solved */}
           <YAxis
             tick={{ fill: '#A5B4FC', fontSize: 12 }}
             label={{
@@ -59,6 +70,8 @@ export default function QuestionRatingGraphs({ questionratingdata }) {
               fill: '#CBD5E1',
             }}
           />
+
+            {/* Tooltip to display the number of problems solved */}
           <Tooltip
             contentStyle={{
               backgroundColor: '#1E293B',
@@ -69,18 +82,22 @@ export default function QuestionRatingGraphs({ questionratingdata }) {
             labelStyle={{ color: '#7DD3FC' }}
             formatter={(value) => [`${value} Problems`, 'Solved']}
           />
+
           <Legend wrapperStyle={{ color: '#94A3B8' }} />
           <div className="w-full h-px"></div>
+
+            {/* Bar graph for visualizing the number of problems solved */}
           <Bar
             name="Number of problems solved"
             dataKey="uv"
             fill="url(#barGradient)"
             barSize={30}
           />
+
         </BarChart>
       </ResponsiveContainer>
 
-      {/* SVG Gradient */}
+        {/* SVG Gradient for styling the bar graph */}
       <svg>
         <defs>
           <linearGradient id="barGradient" x1="0%" y1="0%" x2="0%" y2="100%">

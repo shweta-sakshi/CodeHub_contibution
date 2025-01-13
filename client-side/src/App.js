@@ -1,5 +1,5 @@
 /**
- * @desc It contains all the frontend routes of the application.
+ * @desc It contains all the routes of the application.
  */
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -23,7 +23,6 @@ import ForgotPassword from './pages/SignUp/ForgetPassword';
 export default function App() {
     return (
         <BrowserRouter>
-            // AuthWrapper is a custom component that wraps the entire application and provides authentication context to all the child components.
             <AuthWrapper>
                 <Navbar />
                 <Routes>
@@ -43,9 +42,9 @@ export default function App() {
                     <Route path={"/leader-board"} element={<Leaderboard />} />
                     <Route path={"/team-member"} element={<TeamMember />} />
                     <Route path={"/contact-us"} element={<ContactUs />} />
-                    <Route path= {"/get-codeforces-profile/:id"} element= {<ProtectedRoute>
+                    <Route path={"/get-codeforces-profile/:id"} element={<ProtectedRoute>
                         <DashBoard />
-                    </ProtectedRoute>}/>
+                    </ProtectedRoute>} />
                 </Routes>
             </AuthWrapper>
         </BrowserRouter >

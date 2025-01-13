@@ -1,9 +1,14 @@
+/**
+ * @fileoverview to display the motive and achievements of the CodeHub.
+ */
 import React from 'react'
 import { StickyScroll } from '../../../components/ui/sticky_scroll_reveal'
 import { Timeline } from '../../../components/ui/timeline'
 import objectivesImg from "../../../assets/objectives.png"
 
 export default function MotiveAchievements() {
+
+    // Objectives of CodeHub.
     const objectives = [
         {
             "title": "Building a Strong Coding Community",
@@ -27,6 +32,7 @@ export default function MotiveAchievements() {
         }
     ]
 
+    // About CodeHub and its motive..
     const data = [
         {
             title: "About CodeHub",
@@ -45,9 +51,13 @@ export default function MotiveAchievements() {
 
     return (
         <div className='bg-black w-auto h-auto flex flex-col ' >
+
+            {/*Motive */}
             <div>
                 <Timeline data={data} />
             </div>
+
+            {/*Objectives */}
             <div className="md:mt-24">
                 <h3
                     className="text-center text-3xl md:text-5xl font-bold text-yellow-600 mb-5 md:mb-10">
@@ -55,6 +65,7 @@ export default function MotiveAchievements() {
                 </h3>
                 <StickyScroll content={objectives} image={objectivesImg} />
             </div>
+
         </div >
     )
 }

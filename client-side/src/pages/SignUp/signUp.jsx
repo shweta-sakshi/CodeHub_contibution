@@ -1,18 +1,23 @@
+/**
+ * @fileoverview   signup page.
+ */
 import React, { useState } from "react";
-import { cn } from "../../lib/utils";
-import { BackgroundBeamsWithCollision } from "../../components/ui/background_beams_with_collision";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast"
 import { useDispatch, useSelector } from "react-redux";
+
+import { cn } from "../../lib/utils";
+import { BackgroundBeamsWithCollision } from "../../components/ui/background_beams_with_collision";
 import { signUp } from "../../redux/slices/authSlice";
 
 function Signup() {
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const navigate = useNavigate();//navigate to the specified route.
+    const dispatch = useDispatch();//dispatch an action to the store.
     const { loading, error } = useSelector((state) => state.auth);
 
+    //manage state of the form.
     const [formData, setFormData] = useState({
         username: "",
         cfID: "",
@@ -20,15 +25,17 @@ function Signup() {
         password: "",
     });
 
-
+    //manage state of the errors.
     const [errors, setErrors] = useState({});
 
+    //to update state of form data and errors.
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
         setErrors({ ...errors, [name]: "" });
     };
 
+    //validate the form data.
     const validateForm = () => {
         const newErrors = {};
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -42,17 +49,22 @@ function Signup() {
         return newErrors;
     };
 
+    //handle the form submission.
     const handleSubmit = async (e) => {
         e.preventDefault();
         e.stopPropagation();
 
+        //validate the form data.
         const validationErrors = validateForm();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
         }
 
+        //dispatch the signUp action.
         const resultAction =await dispatch(signUp(formData));
+
+        //check signup status.
         if (signUp.fulfilled.match(resultAction)) {
             navigate("/verify-email", { state: { cfID: formData.cfID, email: formData.email } });
         }
@@ -62,18 +74,22 @@ function Signup() {
                 className: "toast-error"
             })
         }
+
     };
 
     return (
+        // background beams with collision effect.
         <BackgroundBeamsWithCollision>
             <div className="mt-10 w-screen h-screen flex  items-center  text-white md:px-0 px-5">
                 <div className="max-w-md w-full ] border-[#3E3E8E] mx-auto rounded-lg p-6 shadow-2xl border">
+
                     {/* Header */}
                     <h1 className="text-3xl md:text-4xl font-bold text-center text-[#D1D1FF] mb-6">
                         Register Now
                     </h1>
 
                     <form onSubmit={handleSubmit}>
+
                         {/* Username */}
                         <div className="mb-4">
                             <label
@@ -89,11 +105,13 @@ function Signup() {
                                 value={formData.username}
                                 onChange={handleChange}
                                 placeholder="Enter your username"
+                                // apply styles based on the error.
                                 className={cn(
                                     "w-full p-2 md:p-3 rounded border focus:outline-none focus:border-blue-400 bg-[#121232] text-gray-300 placeholder-gray-500",
                                     errors.username && "border-red-500"
                                 )}
                             />
+                            {/* Display error message */}
                             {errors.username && (
                                 <p className="text-red-500 text-xs">{errors.username}</p>
                             )}
@@ -114,11 +132,13 @@ function Signup() {
                                 value={formData.cfID}
                                 onChange={handleChange}
                                 placeholder="Your Codeforces ID"
+                                // apply styles based on the error.
                                 className={cn(
                                     "w-full p-2 md:p-3 rounded border focus:outline-none focus:border-blue-400 bg-[#121232] text-gray-300 placeholder-gray-500",
                                     errors.cfID && "border-red-500"
                                 )}
                             />
+                            {/* Display error message */}
                             {errors.cfID && (
                                 <p className="text-red-500 text-xs">{errors.cfID}</p>
                             )}
@@ -139,11 +159,13 @@ function Signup() {
                                 value={formData.email}
                                 onChange={handleChange}
                                 placeholder="example@domain.com"
+                                // apply styles based on the error.
                                 className={cn(
                                     "w-full p-2 md:p-3 rounded border focus:outline-none focus:border-blue-400 bg-[#121232] text-gray-300 placeholder-gray-500",
                                     errors.email && "border-red-500"
                                 )}
                             />
+                            {/* Display error message */}
                             {errors.email && (
                                 <p className="text-red-500 text-xs">{errors.email}</p>
                             )}
@@ -164,11 +186,13 @@ function Signup() {
                                 value={formData.password}
                                 onChange={handleChange}
                                 placeholder="****************"
+                                // apply styles based on the error.
                                 className={cn(
                                     "w-full p-2 md:p-3 rounded border focus:outline-none focus:border-blue-400 bg-[#121232] text-gray-300 placeholder-gray-500",
                                     errors.password && "border-red-500"
                                 )}
                             />
+                            {/* Display error message */}
                             {errors.password && (
                                 <p className="text-red-500 text-xs">{errors.password}</p>
                             )}
@@ -185,6 +209,7 @@ function Signup() {
                                 {loading && "Signing Up..."}
                             </button>
                         </div>
+
                     </form>
 
                     {/* Login Link */}
@@ -194,7 +219,9 @@ function Signup() {
                             Sign In
                         </Link>
                     </p>
+
                 </div>
+                {/* Toast messages */}
                 <Toaster />
             </div>
         </BackgroundBeamsWithCollision>

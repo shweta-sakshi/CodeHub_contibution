@@ -1,8 +1,10 @@
+/**
+ * @fileoverview Authentication slice for handling login, signup, session checks, email verification, and logout state in a Redux store.
+ */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import authAPI from "../../api/authAPI"
 
-
-//Login
+//Thunk for user login
 export const login = createAsyncThunk('auth/login', async ({ password, email }, { rejectWithValue }) => {
     try {
         const response = await authAPI.handleLogin({ password, email });
@@ -10,7 +12,7 @@ export const login = createAsyncThunk('auth/login', async ({ password, email }, 
         if (response.success) {
             return response.data; // return the full response if successful
         } else {
-            // In case the response indicates failure, return a custom message
+            // return the error message if failed
             return rejectWithValue(response.message || "Login failed.");
         }
     } catch (error) {
@@ -18,8 +20,7 @@ export const login = createAsyncThunk('auth/login', async ({ password, email }, 
     }
 });
 
-
-//Check session for authorization
+// Thunk for checking user session authorization
 export const checkAuth = createAsyncThunk('auth/checkSession', async (__dirname, { rejectWithValue }) => {
     try {
         const response = await authAPI.checkSession();
@@ -28,6 +29,7 @@ export const checkAuth = createAsyncThunk('auth/checkSession', async (__dirname,
             return response.data;
         }
         else {
+            // return the error message if failed
             return rejectWithValue(response.message || "Session check failed.");
         }
     } catch (error) {
@@ -35,7 +37,7 @@ export const checkAuth = createAsyncThunk('auth/checkSession', async (__dirname,
     }
 })
 
-//Register
+// Thunk for user registration
 export const signUp = createAsyncThunk('auth/signUp', async ({ username, cfID, email, password }, { rejectWithValue }) => {
     try {
         const response = await authAPI.handleRegister({ username, cfID, email, password });
@@ -43,6 +45,7 @@ export const signUp = createAsyncThunk('auth/signUp', async ({ username, cfID, e
             return response.data;
         }
         else {
+            // return the error message if failed
             return rejectWithValue(response.message || "Sign Up failed");
         }
     } catch (error) {
@@ -50,7 +53,7 @@ export const signUp = createAsyncThunk('auth/signUp', async ({ username, cfID, e
     }
 })
 
-//Email Verification
+// Thunk for email verification
 export const verifyEmail = createAsyncThunk('auth/verifyEmail', async ({ email, verificationCode }, { rejectWithValue }) => {
     try {
         const response = await authAPI.handleVerifyEmail({ email, verificationCode });
@@ -58,6 +61,7 @@ export const verifyEmail = createAsyncThunk('auth/verifyEmail', async ({ email, 
             return response.data;
         }
         else {
+            // return the error message if failed.
             return rejectWithValue(response.message || "Sign Up failed");
         }
     } catch (error) {
@@ -65,7 +69,7 @@ export const verifyEmail = createAsyncThunk('auth/verifyEmail', async ({ email, 
     }
 })
 
-//Logout
+// Thunk for user logout
 export const logout= createAsyncThunk('auth/logout', async(_, {rejectWithValue})=>{
     try {
        const response= await authAPI.handleLogout();
@@ -73,6 +77,7 @@ export const logout= createAsyncThunk('auth/logout', async(_, {rejectWithValue})
            return response.message;
        }
        else{
+           // return the error message if failed.
            return rejectWithValue(response.message || "Logout Failed");
        }
     } catch (error) {
@@ -80,7 +85,9 @@ export const logout= createAsyncThunk('auth/logout', async(_, {rejectWithValue})
     }
 });
 
-
+/**
+ *Redux slice for handling authentication state.
+ */
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
@@ -91,7 +98,6 @@ const authSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            //login
             .addCase(login.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -105,7 +111,6 @@ const authSlice = createSlice({
                 state.error = action.payload;
             })
 
-            //Session Checking
             .addCase(checkAuth.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -120,7 +125,6 @@ const authSlice = createSlice({
                 state.error = action.payload || 'Failed to authenticate';
             })
 
-            //Sign Up
             .addCase(signUp.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -134,7 +138,6 @@ const authSlice = createSlice({
                 state.error = action.payload;
             })
 
-            //Logout
             .addCase(logout.pending, (state) => {
                 state.loading= true;
                 state.error= null;
@@ -151,4 +154,5 @@ const authSlice = createSlice({
     }
 })
 
+// Export the auth slice handle action and update the state.
 export default authSlice.reducer;

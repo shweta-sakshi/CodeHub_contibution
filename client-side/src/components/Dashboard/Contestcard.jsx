@@ -1,7 +1,11 @@
+/**
+ * @fileoverview To display the contest details of the user.
+ */
 import React from "react";
 import { Meteors } from "../ui/Meteors";
-import { Navigate } from "react-router-dom";
 
+
+// Contest card component.
 function ContestCard({ contestID, contestName, contestRank, ratingGain }) {
   const ratingChangeColor = ratingGain >= 0 ? "text-green-400" : "text-red-400";
   const arrow = ratingGain >= 0 ? "▲" : "▼";
@@ -9,12 +13,16 @@ function ContestCard({ contestID, contestName, contestRank, ratingGain }) {
 
   return (
     <div className="relative p-6 min-w-[300px] md:min-w-[350px] overflow-hidden rounded-2xl flex flex-col justify-end items-start transition-transform  bg-gradient-to-b from-[#0f172a] via-[#1e293b] to-[#334155] shadow-lg">
-      <div
+
+        {/* Background of the card */}
+        <div
         className="absolute inset-0 border-2 rounded-2xl blur-md -z-10"
         style={{
           borderImage: "linear-gradient(to right, #10b981, #3b82f6, #ec4899) 1",
         }}
       ></div>
+
+        {/* Content of the card */}
       <div className="relative z-10 w-full text-left">
         <h2 className="font-semibold text-lg text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">
           {contestID}: {contestName}
@@ -25,10 +33,14 @@ function ContestCard({ contestID, contestName, contestRank, ratingGain }) {
         >
           {arrow} {gainValue}
         </p>
+
+        {/* Explore button - open the codeforces contest */}
         <button className="mt-4 bg-gradient-to-r from-green-400 to-teal-400 px-4 py-2 rounded-md text-gray-900 font-semibold text-sm  transition" onClick={()=>{ window.location.href = "https://codeforces.com/contest/" + contestID }}>
           Explore
         </button>
       </div>
+
+        {/*Add Meteors effect to card.*/}
       <Meteors number={3} />
     </div>
   );
@@ -37,9 +49,13 @@ function ContestCard({ contestID, contestName, contestRank, ratingGain }) {
 export default function ContestDetails({ contestData }) {
   return (
     <div className="p-8 rounded-lg">
+
+      {/*  Title */}
       <h3 className="text-3xl md:text-5xl text-center font-bold text-transparent bg-clip-text text-[#05CBDC] mb-8">
         Contests
       </h3>
+
+        {/* Contest cards */}
       <div className="overflow-x-auto w-full">
         <div className="flex space-x-6">
           {contestData
@@ -56,6 +72,7 @@ export default function ContestDetails({ contestData }) {
             ))}
         </div>
       </div>
+
     </div>
   );
 }

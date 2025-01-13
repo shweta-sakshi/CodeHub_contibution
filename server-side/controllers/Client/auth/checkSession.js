@@ -4,12 +4,10 @@ const ClientSession = require("../../../model/clientSessionModel")
 const User = require("../../../model/userModel")
 const AsyncErrorHandler = require("../../../ErrorHandlers/async_error_handler");
 
-
 /**
  * @description Checks if the user's session is valid.
  * @returns {Object} - Response object with session status and user data if valid.
  */
-
 const checkSession = AsyncErrorHandler(async (req, res, next) => {
     //Extract token from user's cookie
     const token = req.decoded;
