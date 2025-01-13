@@ -15,7 +15,7 @@ export function Login() {
   const navigate = useNavigate();// For navigation to other routes.
 
   const dispatch = useDispatch(); // For dispatching actions to the store.
-  const {loading, error } = useSelector((state) => state.auth);// For getting the state from the store.
+  const { loading, error } = useSelector((state) => state.auth);// For getting the state from the store.
 
   // initial Form Data State.
   const [formData, setFormData] = useState({
@@ -86,7 +86,7 @@ export function Login() {
           <h1 className="text-3xl md:text-4xl font-bold text-center text-[#D1D1FF] mb-6">
             Login to your account
           </h1>
-          <p style={{'textAlign': 'center'}}>Use Chrome Desktop(version:120.0 or higher)</p>
+          <p style={{ 'textAlign': 'center' }}>Use Chrome Desktop(version:120.0 or higher)</p>
 
           <form onSubmit={handleSubmit}>
 
@@ -105,7 +105,7 @@ export function Login() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Your email address"
-                {/* Conditional Styling */}
+                //Conditional Styling.
                 className={cn(
                   "w-full p-2 md:p-3 rounded border focus:outline-none focus:border-blue-400 bg-[#121232] text-gray-300 placeholder-gray-500",
                   errors.email && "border-red-500"
@@ -132,13 +132,13 @@ export function Login() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="****************"
-                {/*conditional styling*/}
+                //conditional styling.
                 className={cn(
                   "w-full p-2 md:p-3 rounded border focus:outline-none focus:border-blue-400 bg-[#121232] text-gray-300 placeholder-gray-500",
                   errors.password && "border-red-500"
                 )}
               />
-                {/* Error Message */}
+              {/* Error Message */}
               {errors.password && (
                 <p className="text-red-500 text-xs">{errors.password}</p>
               )}

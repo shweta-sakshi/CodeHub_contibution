@@ -19,7 +19,7 @@ function ContactUs() {
     message: ''
   });
 
-    // Form errors state.
+  // Form errors state.
   const [errors, setErrors] = useState({
     name: '',
     email: '',
@@ -37,22 +37,22 @@ function ContactUs() {
 
   // Function to validate the form data.
   function validateFeedBackform() {
-      //Email generic regex.
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const newErrors = {};
+    //Email generic regex.
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const newErrors = {};
 
-      // Check if the username is empty.
-      if (!formData.name.trim()) newErrors.username = "Name is required";
+    // Check if the username is empty.
+    if (!formData.name.trim()) newErrors.username = "Name is required";
 
-      // Check if the email is empty and is in incorrect format.
-      if (!formData.email.trim()) newErrors.email = "Email is required";
-      else if (!emailRegex.test(formData.email))
-        newErrors.email = "Invalid email format";
+    // Check if the email is empty and is in incorrect format.
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    else if (!emailRegex.test(formData.email))
+      newErrors.email = "Invalid email format";
 
-      // Check if the message is empty.
-      if (!formData.message.trim()) newErrors.cfID = "Message is required";
+    // Check if the message is empty.
+    if (!formData.message.trim()) newErrors.cfID = "Message is required";
 
-      return newErrors;
+    return newErrors;
   }
 
   // Handle submit function to submit the feedback.
@@ -119,7 +119,7 @@ function ContactUs() {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Your name"
-                  {/* Add class to show red border if name is empty */}
+                  //Add class to show red border if name is empty
                   className={cn(
                     "w-full p-2 md:p-3 rounded border focus:outline-none focus:border-blue-400 bg-[#121232] text-gray-300 placeholder-gray-500",
                     errors.name && "border-red-500"
@@ -146,7 +146,7 @@ function ContactUs() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="example@domain.com"
-                  {/* Add class to show red border if name is empty */}
+                  //Add class to show red border if name is empty
                   className={cn(
                     "w-full p-2 md:p-3 rounded border focus:outline-none focus:border-blue-400 bg-[#121232] text-gray-300 placeholder-gray-500",
                     errors.email && "border-red-500"
@@ -173,7 +173,7 @@ function ContactUs() {
                   onChange={handleChange}
                   placeholder="Your message"
                   rows="4"
-                  {/* Add class to show red border if name is empty */}
+                  //Add class to show red border if name is empty.
                   className={cn(
                     "w-full p-2 md:p-3 rounded border focus:outline-none focus:border-blue-400 bg-[#121232] text-gray-300 placeholder-gray-500",
                     errors.message && "border-red-500"
