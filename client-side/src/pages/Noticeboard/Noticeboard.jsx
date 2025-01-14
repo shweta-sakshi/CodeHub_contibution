@@ -36,17 +36,11 @@ export default function NoticeBoard() {
   const updatePageHtml = async () => {
 
     try {
-<<<<<<< HEAD
-      const NoticeboardAPIresponse = await axios.get(process.env.REACT_APP_SERVER_BASE_URL + '/noticeboard');
-      const noticeList = NoticeboardAPIresponse.data.data;
-
-=======
       //fetching the all notice from the server.
       const NoticeboardAPIresponse = await axios.get(process.env.REACT_APP_SERVER_PATH + '/noticeboard');
       const noticeList = NoticeboardAPIresponse.data.data;
 
         //updating the page html with the fetched data.
->>>>>>> origin/pr/77
       setPageHtml(<>
         <div>
           <div className="background-pink-blue" style={{ minHeight: '100vh' }}>

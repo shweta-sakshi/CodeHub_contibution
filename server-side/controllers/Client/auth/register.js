@@ -7,7 +7,6 @@ const axios = require("axios");
 const AsyncErrorHandler = require("../../../ErrorHandlers/async_error_handler");
 const utils = require("../../../utils/auth/auth.utils")
 const SendEmail = require("../../../utils/auth/sendEmail")
-const User = require("../../../model/userModel");
 const VerificationToken = require("../../../model/verificationTokenModel");
 
 /**

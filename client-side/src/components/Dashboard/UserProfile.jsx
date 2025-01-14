@@ -104,15 +104,10 @@ export default function UserProfile({ name, rank, image, userDetail }) {
         </div>
 
       </div>
-<<<<<<< HEAD
       <button className="mt-12 space-y-8 w-full max-w-4xl bg-gray-800 border-2 border-white rounded-lg p-6 hover:bg-gray-600">
         visit on CodeForces
       </button>
       {/* Details Section */}
-=======
-
-      {/* User details and highest rank section */}
->>>>>>> origin/pr/77
       <div className="mt-12 space-y-8 w-full max-w-4xl">
 
         {/* Highest Rank */}
@@ -125,12 +120,7 @@ export default function UserProfile({ name, rank, image, userDetail }) {
           </div>
         </div>
 
-<<<<<<< HEAD
-
-        {/* User Info Boxes */}
-=======
         {/* User Detail section */}
->>>>>>> origin/pr/77
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {details.map((detail, index) => (
             <div

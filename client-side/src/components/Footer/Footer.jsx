@@ -51,12 +51,9 @@ export default function Footer() {
   </div>
 
   <div className="LinkContainer">
-<<<<<<< HEAD
     {/* <a href="mailto:computer.club@mnnit.ac.in" className="FooterLink">Contact Us</a> */}
     <a href="https://github.com/adityarai0705/CodeHub/blob/main/LICENSE" className='font-normal FooterLink'>License </a>
     <a href="https://github.com/adityarai0705/CodeHub/blob/main/CODE_OF_CONDUCT.md" className='font-normal FooterLink'> Code of Conduct</a>
-=======
->>>>>>> origin/pr/77
   </div>
 
   <hr className="sectionDivider" />
