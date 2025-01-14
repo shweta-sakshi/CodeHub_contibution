@@ -1,9 +1,11 @@
 const jwt = require("jsonwebtoken")
 /**
- * 
- * Middleware to process the password change token
+ * @func verifyPasswordReq
+ * @desc Middleware to verify password change token and accordingly modify the request body.
+ * @requires jwt - to verify the token.
  */
 const verifyPasswordReq = (req, res, next) => {
+    // Get the token from the PASSWORD cookie and verify it.
     const token = req.cookies.PASSWORD;
 
     if (!token) {
@@ -21,11 +23,13 @@ const verifyPasswordReq = (req, res, next) => {
             });
         }
         else if(decoded.purpose == "Verify User"){
+            // Add email to the request body.
             req.body.email = decoded.email;
             next();
         }
         else if(decoded.purpose == "Password Change"){
-            req.body.passwordChangeToken = decoded;
+            // Add email and purpose to the request body.
+            req.body.passwordChangeToken = decoded; // decoded contains jwt payload.
             next();
         }
         else{

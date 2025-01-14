@@ -1,5 +1,9 @@
-const jwt = require("jsonwebtoken")
-
+const jwt = require("jsonwebtoken");
+/**
+ *  @desc verifies the user's authentication status using a JWT stored in a cookie.
+ *  @requires jwt - The library used to generate and verify JSON Web Tokens.
+ *  @returns {Object} - user authentication status.
+ */
 const verifyCookie = (req, res, next) => {
       const token = req.cookies.jwt;
   
@@ -17,7 +21,7 @@ const verifyCookie = (req, res, next) => {
                   message: "Invalid or expired authentication cookie.",
               });
           }
-          req.decoded = decoded;
+          req.decoded = decoded; // assign the decoded payload from token to the request object.
           next();
       });
   };

@@ -1,10 +1,17 @@
+/**
+ * @fileoverview ForgetPassword page send mail - step 1 of ForgetPassword.
+ */
 import React, { useState } from "react";
 import API from "../../api/forgetPassword";
 
 function SendEmail({ onNext,toast }) {
+
+    //manage state.
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
-    const api = new API();
+    const api = new API();//create an instance of API class.
+
+    //handle the form submission and display toast messages.
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -22,7 +29,9 @@ function SendEmail({ onNext,toast }) {
     return (
         <div className="max-w-md w-full mx-auto rounded-lg p-6 shadow-2xl bg-[#121232]">
             <h1 className="text-3xl font-bold text-center mb-6">Forget Password</h1>
+
             <form onSubmit={handleSubmit}>
+                {/* Email Address  */}
                 <div className="mb-4">
                     <label className="block text-sm font-semibold mb-2">Email Address</label>
                     <input
@@ -34,6 +43,8 @@ function SendEmail({ onNext,toast }) {
                         required
                     />
                 </div>
+
+                {/* Send OTP Button */}
                 <button
                     type="submit"
                     className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded transition"
@@ -41,7 +52,9 @@ function SendEmail({ onNext,toast }) {
                 >
                     {loading ? "Sending..." : "Send OTP"}
                 </button>
+
             </form>
+
         </div>
     );
 }

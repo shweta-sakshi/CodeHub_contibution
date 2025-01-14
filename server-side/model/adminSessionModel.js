@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 
+/**
+ * @desc Admin Session Schema. keep track of admin session.
+ */
 const adminSessionSchema = new mongoose.Schema({
     username: {
         type: String,

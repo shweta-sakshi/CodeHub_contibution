@@ -1,16 +1,17 @@
-import React, { useState, useContext } from 'react'
+/**
+ * @fileoverview Navbar for few components.
+ */
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import "./NavBar.css";
 import CodeTogetherSingleLine from "./Assets/Logos/CodeHubLarge.png";
 import CodeTogetherLogo from "./Assets/Logos/CodeTogetherLogo.png";
-import { useNavigate } from 'react-router-dom';
-
 
 export default function NavBarSecond() {
     const navigate = useNavigate();
 
     //USER-LOGIN INFO
-    //   const {login,userCfID} = useContext(loginContext);
-    //   console.log(login)  
     const login = false;
     const userCfID = "";
 
@@ -87,10 +88,6 @@ export default function NavBarSecond() {
                         <li className='text-dg' onClick={() => navigate(process.env.REACT_APP_BASE_URL + "/leader-board")} >Leader Board</li>
                         <li className='text-dg' onClick={() => navigate(process.env.REACT_APP_BASE_URL + "/education")}>Education</li>
                         <li className='text-dg' onClick={() => navigate(process.env.REACT_APP_BASE_URL + "/notice-board")}>Notice Board</li>
-                        {/* <li onClick={() => navigate("/demoLink")}>Home</li>
-                        <li onClick={() => navigate("/demoLink")} >Leader Board</li>
-                        <li onClick={() => navigate("/demoLink")}>Education</li>
-                        <li onClick={() => navigate("/demoLink")}>Notice Board</li> */}
                     </ul>
                 </div>}
             </div >

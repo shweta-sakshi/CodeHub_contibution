@@ -1,3 +1,10 @@
+
+/**
+ * @description function to create a verification email template.
+ * @param verificationCode.
+ * @param subject.
+ * @return {string} HTML code for the email template.
+ */
 function createVerificationEmail({ verificationCode, subject }) {
     return `
       <!DOCTYPE html>
@@ -87,7 +94,13 @@ function createVerificationEmail({ verificationCode, subject }) {
       </html>
     `;
 }
-//Creating Email for Forget Password
+
+/**
+ * @description function to create a forgot password email template.
+ * @param resetCode
+ * @param subject
+ * @return {string} HTML code for the email template.
+ */
 function createForgotPasswordEmail({ resetCode, subject }) {
     return `
       <!DOCTYPE html>
@@ -178,6 +191,10 @@ function createForgotPasswordEmail({ resetCode, subject }) {
     `;
 }
 
+/**
+ * @description function to generate a random 7-digit verification code.
+ * @returns {String} Random 7-digit verification code.
+ */
 function generateVerificationCode() {
     const pool = "0123456789";
     let token = "";
@@ -187,6 +204,5 @@ function generateVerificationCode() {
     }
     return token;
 }
-
 
 module.exports = { generateVerificationCode, createVerificationEmail,createForgotPasswordEmail }

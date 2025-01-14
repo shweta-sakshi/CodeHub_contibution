@@ -1,11 +1,23 @@
 import React from 'react';
+
 import './Footer.css';
+import Contributors from './Contributors';
 import NiTLogo from './mnnit_logo.png';
 import CTLogo from './logo_half.png';
-import Contributors from './Contributors';
+
+/**
+ * @description This component is used to render the footer of the Project.
+ * It displays the following information:
+ *              - CodeHub and MNNIT logo.
+ *              - list of contributors to the project.
+ *              - copyright information.
+ *              - contribution link to the GitHub repository.
+ */
 export default function Footer() {
   const today = new Date();
   const year = today.getFullYear();
+
+  // List of all contributors and their LinkedIn profile link.
   const contributors = [
     { name: 'Aditya Raj Rai', link: 'https://www.linkedin.com/in/link-aditya-rai/' },
     { name: 'Mrinal Varshney', link: 'https://www.linkedin.com/in/mrinal-varshney-971a27250/' },
@@ -21,36 +33,35 @@ export default function Footer() {
     { name: 'Janhavi Rai', link: 'https://www.linkedin.com/in/janhavi-rai24/' },
     { name: 'Nishant Mohan', link: 'https://www.linkedin.com/in/nishant-mohan-58931927a/' },
   ];
-  return (
-    // <div className='FooterContainer'>
-    //     <div className='footerTitle'>
-    //         <div style={{display : 'flex', flexDirection : 'row', marginRight : '4px'}}> &#169;{year} <span className='desktopHidden'>Copyrights reserved</span> </div>
-    //         <div> CodeTogether </div> 
-    //         <div className='mobileHidden'> <h4 style={{padding : '0', margin : '0', marginLeft : '4px', marginRight : '4px'}}><b>|</b></h4> </div> 
-    //         <a className='FooterLink' href='https://www.nit.ac.in/'> Narula Institute of Technology</a>
-    //     </div>
-    //     <div>
-    //         <img height={'50px'} width={'50px'} style={{margin : '20px'}} src={CTLogo} />
-    //         <img height={'50px'} width={'80px'} style={{margin : '20px'}} src={NiTLogo} />
-    //     </div>
-    // </div>
 
+  return (
 <footer className="FooterContainer">
+
+  {/*Logos and labels*/}
   <div className="footerLogo">
     <img className= "ct_logo" src={CTLogo} alt="CodeHub Logo" />
     <img className= "nit_logo" src={NiTLogo} alt="Motilal Nehru National Institute of Technology Logo" />
     <span className="mnnitLabel">MNNIT</span>
   </div>
+
+    {/*Copywrite Information*/}
   <div className="footerTitle">
     <span>&#169; {year} CodeHub. All Rights Reserved.</span>
     <br />
   </div>
+
   <div className="LinkContainer">
+<<<<<<< HEAD
     {/* <a href="mailto:computer.club@mnnit.ac.in" className="FooterLink">Contact Us</a> */}
     <a href="https://github.com/adityarai0705/CodeHub/blob/main/LICENSE" className='font-normal FooterLink'>License </a>
     <a href="https://github.com/adityarai0705/CodeHub/blob/main/CODE_OF_CONDUCT.md" className='font-normal FooterLink'> Code of Conduct</a>
+=======
+>>>>>>> origin/pr/77
   </div>
+
   <hr className="sectionDivider" />
+
+    {/*Contribution link*/}
     <div className='additionalInfo'>
       <div className='contributors'>
       <h3>Do you wish to contribute to CodeHub?</h3>
@@ -66,12 +77,15 @@ export default function Footer() {
         <button className="contributeButton">Visit CodeHub on GitHub</button>
       </a>
     </div>
+
     <hr className="sectionDivider " />
+
+    {/*List of all Contributors with their LinkedIn profile link*/}
     <p className='mt-10'><b>Contributors</b></p>
       <Contributors contributors={contributors}/>
     <br/>
   </div>
-</footer>
 
+</footer>
   )
 }

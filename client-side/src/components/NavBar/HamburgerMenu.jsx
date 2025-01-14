@@ -1,99 +1,9 @@
-// import { useState } from "react";
-// import Hamburger from "hamburger-react";
-// import { useNavigate } from "react-router-dom";
-// import { useSelector } from "react-redux";
-
-// const HamburgerMenu = () => {
-//   const [isOpen, setIsOpen] = useState(false);
-//   const navigate = useNavigate();
-
-//   const auth = useSelector((state) => state.auth.user);
-
-//   const toggleMenu = () => {
-//     setIsOpen(!isOpen);
-//   };
-
-//   const handleLogoClick = () => {
-//     navigate("/");
-//   };
-
-//   return (
-//     <div className="relative ">
-//       <div
-//         className={`bg-opacity-[70%] rounded-xl ${
-//           isOpen ? "fixed" : "absolute right-4"
-//         } z-[90] right-4`}
-//       >
-//         <Hamburger
-//           toggled={isOpen}
-//           toggle={toggleMenu}
-//           color="#fff"
-//           size={30}
-//         />
-//       </div>
-
-//       {/* Black gradient overlay */}
-//       {isOpen && (
-//         <div
-//           className="fixed inset-0 bg-gradient-to-b from-black to-primary z-30 transition-all duration-700"
-//           onClick={toggleMenu}
-//         />
-//       )}
-
-//       <div
-//         className={`fixed inset-0 py-16 w-full h-full text-white transition-all duration-700 ease-in-out transform ${
-//           isOpen
-//             ? "translate-x-0 opacity-100"
-//             : "translate-x-full opacity-0"
-//         } z-40`}
-//       >
-//         <nav className="flex flex-col justify-center gap-12 items-center h-full relative text-4xl font-bebas text-navlink">
-//           <ul className="flex flex-col items-center justify-center gap-1">
-//             <li className="py-2 px-4 hover:text-blue1 transition-all duration-300 ease-in-out">
-//               <a href="/">Home</a>
-//             </li>
-//             <li className="py-2 px-4 hover:text-blue1 transition-all duration-300 ease-in-out">
-//               <a href="/contact-us">Contact Us</a>
-//             </li>
-//             <li className="py-2 px-4 hover:text-blue1 transition-all duration-300 ease-in-out">
-//               <a href="/notice-board">NoticeBoard</a>
-//             </li>
-//           </ul>
-//           {auth ? (
-//             <a href="/dashboard">
-//               <button
-//                 className={`md:flex w-[9.8rem] h-[4rem] tracking-wider bg-accent text-white items-center justify-center font-semibold font-bebas hover:text-register hover:bg-white transition-all duration-500 ${
-//                   isOpen ? "block" : "hidden"
-//                 }`}
-//               >
-//                 <h1 className="text-[2.2rem]">PROFILE</h1>
-//               </button>
-//             </a>
-//           ) : (
-//             <a href="/login">
-//               <button
-//                 className={`md:flex w-[9.8rem] h-[4rem] tracking-wider bg-accent text-white items-center justify-center font-semibold font-bebas hover:text-register hover:bg-white transition-all duration-500 ${
-//                   isOpen ? "block" : "hidden"
-//                 }`}
-//               >
-//                 <h1 className="text-[2.2rem]">Login</h1>
-//               </button>
-//             </a>
-//           )}
-//         </nav>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default HamburgerMenu;
-
-
-
-
-
+/**
+ * @fileoverview Hamburger menu component for small screens.
+ */
 import { useState, useRef, useEffect } from "react";
-import Hamburger from "hamburger-react";
+import Hamburger from "hamburger-react"; //menu icon
+
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/slices/authSlice"; 
@@ -106,20 +16,23 @@ const HamburgerMenu = () => {
   const auth = useSelector((state) => state.auth.user);
   const dropdownRef = useRef(null);
 
+  // Toggle menu
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  // Toggle dropdown of profile.
   const handleProfileClick = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
+  // Logout the user and navigate to login page.
   const handleLogout = () => {
     dispatch(logout());
     window.location.href = "/login";
   };
 
-  // Close dropdown when clicking outside
+  // Close dropdown when clicking outside the dropdown area.
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -137,12 +50,15 @@ const HamburgerMenu = () => {
   }, []);
 
   return (
+
     <div className="relative ">
+      {/* menu icon */}
       <div
         className={`bg-opacity-[70%] rounded-xl ${
           isOpen ? "fixed" : "absolute right-4"
         } z-[90] right-4`}
       >
+
         <Hamburger
           toggled={isOpen}
           toggle={toggleMenu}
@@ -178,6 +94,7 @@ const HamburgerMenu = () => {
             </li>
           </ul>
 
+          {/* Additional profile menu if the user is authenticated, otherwise show the login button */}
           {auth ? (
             <div
               ref={dropdownRef}

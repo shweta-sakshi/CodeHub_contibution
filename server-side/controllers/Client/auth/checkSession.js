@@ -1,10 +1,15 @@
-const ClientSession = require("../../../model/clientSessionModel")
-const AsyncErrorHandler = require("../../../ErrorHandlers/async_error_handler");
 const jwt = require("jsonwebtoken")
-const User = require("../../../model/userModel")
 
+const ClientSession = require("../../../model/clientSessionModel")
+const User = require("../../../model/userModel")
+const AsyncErrorHandler = require("../../../ErrorHandlers/async_error_handler");
+
+/**
+ * @description Checks if the user's session is valid.
+ * @returns {Object} - Response object with session status and user data if valid.
+ */
 const checkSession = AsyncErrorHandler(async (req, res, next) => {
-    // Extract token from user's cookie
+    //Extract token from user's cookie
     const token = req.decoded;
     
     if (!token) {
@@ -12,14 +17,14 @@ const checkSession = AsyncErrorHandler(async (req, res, next) => {
     }
 
     try {
-        //Verify the JWT token
+        //Verify the JWT token.
         const userId = token.userId;
         const storedToken = await ClientSession.findOne({ userId });
         if (!storedToken) {
-            console.log("Not found")
             return res.status(401).json({ success: false, message: "Unauthorized access" });
         }
 
+        //extracting user information from database.
         const user = await User.findById(userId);
         const sanitizedUser = {
             userID: user._id,
@@ -29,7 +34,8 @@ const checkSession = AsyncErrorHandler(async (req, res, next) => {
             cfVerified: user.cfVerified,
             cfID: user.cfID
         }
-        //Success response
+
+        //Success response with data.
         res.status(200).json({
             data: sanitizedUser,
             success: true,
@@ -37,6 +43,7 @@ const checkSession = AsyncErrorHandler(async (req, res, next) => {
         });
 
     } catch (error) {
+        //Error response to custom Async error handler.
         next(error);
     }
 })

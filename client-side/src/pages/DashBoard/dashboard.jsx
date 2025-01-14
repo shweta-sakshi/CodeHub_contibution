@@ -1,45 +1,47 @@
+/**
+ * @fileoverview  It is the UserHome page which is the main page of the user dashboard.
+ */
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
-import RatingCard from '../../components/RatingCard';
+
 import ContestRating from './Graphs/ContestRating';
-import './UserHome.css';
 import PerformanceIndex from './Graphs/PerformanceIndex';
 import SubmissionVerdict from './Graphs/SubmissionVerdict';
 import ProblemRating from './Graphs/ProblemRating';
-import ProfileImg from './UserInfo/ProfileImg';
-import '../../pages/pages.css';
-import UserDetail from './UserInfo/UserDetail';
 import ProblemDetails from './ProblemDetails/ProblemDetails';
-import Languages from './Graphs/Languages';
 import NavSpace from '../../components/NavSpace';
 import Spinner from '../../components/Spinner/Spinner';
 import Alert from '../../components/Alert/Alert';
 import Footer from '../../components/Footer/Footer';
-import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
 import UserProfile from "../../components/Dashboard/UserProfile";
 import ContestDetails from '../../components/Dashboard/Contestcard';
+<<<<<<< HEAD
 import Heatmap from './HeatMap/HeatMap';
+=======
+import '../../pages/pages.css';
+import './UserHome.css';
+>>>>>>> origin/pr/77
 
 export default function UserHome() {
 
+    // to navigate to any route.
     const navigate = useNavigate();
 
-    // Declared Data members
+    // get the user detail from the redux store.
     const { user } = useSelector((state) => state.auth);
-    console.log("user in There =======> ", user);
+
     const [PageHtml, setPageHtml] = useState(<>
         <NavSpace />
         <Spinner />
     </>);
 
-    const { id } = useParams();
+    const { id } = useParams(); // get the user id from the url.
     let cfID = user ? user.cfID : null;
     if (id) {
         cfID = id;
     }
-    console.log(cfID);
-
     let userData = { status: "", data: {} };
     let userRating = { status: "", data: {} };
     let userSubmissions = { status: "", data: {} };
@@ -47,6 +49,7 @@ export default function UserHome() {
     let userSubmissionVerdict = {
         FAILED: 0, OK: 0, PARTIAL: 0, COMPILATION_ERROR: 0, RUNTIME_ERROR: 0, WRONG_ANSWER: 0, PRESENTATION_ERROR: 0, TIME_LIMIT_EXCEEDED: 0, MEMORY_LIMIT_EXCEEDED: 0, IDLENESS_LIMIT_EXCEEDED: 0, SECURITY_VIOLATED: 0, CRASHED: 0, INPUT_PREPARATION_CRASHED: 0, CHALLENGED: 0, SKIPPED: 0, TESTING: 0, REJECTED: 0
     }
+
     let userSubmissionRating = []
     let userDetail = {
         name: "",
@@ -60,8 +63,10 @@ export default function UserHome() {
         HighestRatingGain: 0
     }
 
+    //function to fetch the data from the codeforces API.
     async function fetchData() {
-        // CDid Verification check
+
+        // cfid is not present.
         if (!cfID) {
             setPageHtml(
                 <>
@@ -74,6 +79,7 @@ export default function UserHome() {
             return;
         }
 
+        // if the user has not verified their Codeforces ID.
         if (!user?.cfVerified) {
             setPageHtml(
                 <div className="w-screen h-screen bg-gradient-to-br from-purple-600 via-blue-500 to-indigo-800 flex items-center justify-center">
@@ -84,8 +90,9 @@ export default function UserHome() {
                         <p className="text-white mb-6">
                             Verify your account to access full profile details and get personalized insights.
                         </p>
+                        {/*Button - navigate to the  verify-cf-id page*/}
                         <button
-                            onClick={() => navigate("/verify-cf-id")}  // Navigate to the '/verify-cf-id' page
+                            onClick={() => navigate("/verify-cf-id")}
                             className="mt-6 px-6 py-2 bg-gradient-to-br from-green-400 to-blue-500 text-white font-bold rounded-full shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
                         >
                             Verify Now
@@ -95,15 +102,14 @@ export default function UserHome() {
             );
             return;
         }
-        
 
-        // API calls and Initialisation of Data Members
         try {
-            console.log(cfID);
+            //codeforces API calls
             const userDataAPI = await axios.get("https://codeforces.com/api/user.info?handles=" + cfID);
             const userRatingAPI = await axios.get("https://codeforces.com/api/user.rating?handle=" + cfID);
             const userSubmissionsAPI = await axios.get("https://codeforces.com/api/user.status?handle=" + cfID);
-            console.log("Api calls done");
+
+            //Initialisation of Data Members.
 
             userData.status = userDataAPI.data.status;
             userData.data = userDataAPI.data.result[0];
@@ -113,10 +119,9 @@ export default function UserHome() {
 
             userSubmissions.status = userSubmissionsAPI.data.status;
             userSubmissions.data = userSubmissionsAPI.data.result;
-
             userLanguage.status = userSubmissionsAPI.data.status;
 
-            console.log("user first name:", userData.data.firstName);
+            //initialisation of userDetail.
             if (userData.data.firstName === undefined && userData.data.lastName === undefined) {
                 userDetail.name = "Name not available"
             } else if (userData.data.firstName === undefined) {
@@ -132,6 +137,7 @@ export default function UserHome() {
             userDetail.contestGiven = userRating.data.length;
             userDetail.submissionsMade = userSubmissions.data.length;
 
+            //initialisation of userSubmissionRating form 800 to 3500.(0 to 27)
             for (let i = 800; i <= 3500; i += 100) {
                 userSubmissionRating[(i / 100) - 8] = {
                     'name': i,
@@ -140,6 +146,7 @@ export default function UserHome() {
                 }
             }
 
+            //userSubmissionRating fill value according to the rating.
             userSubmissionRating[0].fill = 'rgb( 150, 150, 150)'; // 800
             userSubmissionRating[1].fill = 'rgb( 150, 150, 150)'; // 900
             userSubmissionRating[2].fill = 'rgb( 150, 150, 150)'; // 1000
@@ -169,6 +176,7 @@ export default function UserHome() {
             userSubmissionRating[26].fill = 'rgb( 156, 31, 20)'; // 3400
             userSubmissionRating[27].fill = 'rgb( 156, 31, 20)'; // 3500
 
+            //find the bestRank and HighestRatingGain of the user and assign it to userDetail.
             userRating.data.map(contest => {
                 let curRank = contest.rank;
                 let curRatingGain = contest.newRating - contest.oldRating;
@@ -180,15 +188,16 @@ export default function UserHome() {
             });
 
             userSubmissions.data.map((submission) => {
+                //count the number of submissions of each language.
                 for (let i of submission.programmingLanguage.split(" ")) {
                     if (i.toUpperCase() === "GNU" || i.toUpperCase() === "G++" || i.toUpperCase() === "MS") {
-                        userLanguage.data['C/C++'] = userLanguage.data['C/C++'] ? userLanguage.data['C/C++'] + 1 : 1;
+                        userLanguage.data['C/C++'] = userLanguage.data['C/C++'] ? (userLanguage.data['C/C++'] + 1) : 1;
                     }
                     if (i.toUpperCase() === "PYPY" || i.toUpperCase() === "PYTHON") {
-                        userLanguage.data['Python'] = userLanguage.data['Python'] ? userLanguage.data['Python'] + 1 : 1;
+                        userLanguage.data['Python'] = userLanguage.data['Python'] ? (userLanguage.data['Python'] + 1) : 1;
                     }
                     if (i.toUpperCase() === "JAVA") {
-                        userLanguage.data['Java'] = userLanguage.data['Java'] ? userLanguage.data['Java'] + 1 : 1;
+                        userLanguage.data['Java'] = userLanguage.data['Java'] ? (userLanguage.data['Java'] + 1) : 1;
                     }
                     if (i.toUpperCase() === "JAVASCRIPT") {
                         userLanguage.data['Javascript'] = userLanguage.data['Javascript'] ? userLanguage.data['Javascript'] + 1 : 1;
@@ -197,7 +206,10 @@ export default function UserHome() {
                         userLanguage.data['Kotlin'] = userLanguage.data['Kotlin'] ? userLanguage.data['Kotlin'] + 1 : 1;
                     }
                 }
+                //count the number of submissions of each verdict.
                 userSubmissionVerdict[submission.verdict] += 1;
+
+                //count number of problems solved.
                 if (submission.verdict === 'OK' && submission.problem.rating !== undefined) {
                     userSubmissionRating[(submission.problem.rating / 100) - 8].uv += 1;
                     userDetail.problemSolved += 1;
@@ -206,6 +218,7 @@ export default function UserHome() {
                 return null;
             });
 
+            //set the pageHtml.
             setPageHtml(
                 <>
                 <div className='bg-gradient-to-b from-gray-900 via-indigo-950 to-gray-950 px-1 md:px-4 py-6 pb-8'>
@@ -219,7 +232,6 @@ export default function UserHome() {
                                 <Heatmap handle={cfID} />
                                 <SubmissionVerdict verdictdata={userSubmissionVerdict} />
                                 <ProblemRating questionratingdata={userSubmissionRating} />
-                                {/* <Languages languagedata={userLanguage} /> */}
                             </div>
                             <div>
                                 <ContestDetails contestData={userRating.data} />
@@ -232,6 +244,8 @@ export default function UserHome() {
                 </>
             );
         } catch (error) {
+
+            //if any error occurs while fetching the data set the pageHtml.
             setPageHtml(
                 <>
                     <NavSpace />
@@ -247,5 +261,6 @@ export default function UserHome() {
         fetchData();
     }, [cfID]);
 
+    //return the pageHtml set by the fetchData function.
     return <>{PageHtml}</>;
 }

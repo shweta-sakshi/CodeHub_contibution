@@ -16,13 +16,12 @@ code {
     monospace;
 }
 
-
 .toast-success {
   border: 1px solid #108126;
   padding: 12px;
   margin-top: 50px;
-  color: white;
   /* Set text color to white */
+  color: white;
   background: linear-gradient(90deg, #23C43F 0%, #108126 100%);
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -33,8 +32,8 @@ code {
   border: 1px solid #BE1E10;
   padding: 12px;
   margin-top: 50px;
-  color: white;
   /* Set text color to white */
+  color: white;
   background: linear-gradient(90deg, #F44D25 0%, #BE1E10 100%);
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -44,8 +43,8 @@ code {
 .toast-blue {
   padding: 12px;
   margin-top: 50px;
-  color: white;
   /* Set text color to white */
+  color: white;
   background: linear-gradient(90deg, #74C1FE 0%, #075FA6 100%);
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -56,8 +55,8 @@ code {
   border: 1px solid #EA730D;
   padding: 12px;
   margin-top: 50px;
-  color: white;
   /* Set text color to white */
+  color: white;
   background: linear-gradient(90deg, #FBBD28 0%, #EA730D 100%);
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

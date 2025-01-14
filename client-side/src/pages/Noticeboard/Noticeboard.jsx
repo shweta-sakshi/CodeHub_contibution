@@ -1,16 +1,19 @@
+/**
+ * @fileoverview Noticeboard page of the website.
+ */
 import React, { useEffect, useState } from 'react';
-import '../pages.css';
-import './Noticeboard.css';
-import NavBarSecond from '../../components/NavBar/NavBarSecond';
+import axios from 'axios';
+
 import NavSpace from '../../components/NavSpace';
 import Spinner from '../../components/Spinner/Spinner';
 import Alert from '../../components/Alert/Alert';
-import axios from 'axios';
 import Footer from '../../components/Footer/Footer';
+import '../pages.css';
+import './Noticeboard.css';
 
 
 
-//notice format
+//notice format to be displayed.
 function Notice(props) {
   return (
     <div>
@@ -23,36 +26,30 @@ function Notice(props) {
   );
 }
 
-// function CreateNotice(props) {
-//   return (
-//     <Notice
-//       key={props._id}
-//       title={props.title}
-//       date={props.date}
-//       body={props.body}
-//     />
-//   );
-// }
-
-
 export default function NoticeBoard() {
   const [PageHtml, setPageHtml] = useState(<>
     <NavSpace />
     <Spinner />
   </>);
 
+  //to update the page html with the fetched data or error message.
   const updatePageHtml = async () => {
 
     try {
+<<<<<<< HEAD
       const NoticeboardAPIresponse = await axios.get(process.env.REACT_APP_SERVER_BASE_URL + '/noticeboard');
       const noticeList = NoticeboardAPIresponse.data.data;
 
+=======
+      //fetching the all notice from the server.
+      const NoticeboardAPIresponse = await axios.get(process.env.REACT_APP_SERVER_PATH + '/noticeboard');
+      const noticeList = NoticeboardAPIresponse.data.data;
+
+        //updating the page html with the fetched data.
+>>>>>>> origin/pr/77
       setPageHtml(<>
         <div>
           <div className="background-pink-blue" style={{ minHeight: '100vh' }}>
-            {/* <div id='navBarLandingPageContainer'>
-              <NavBarSecond />
-            </div> */}
             <NavSpace />
             <div className='notice-heading'>Notice Board</div>
             {noticeList.map((notice) => {
@@ -72,11 +69,10 @@ export default function NoticeBoard() {
       </>);
     }
     catch (err) {
+
+      //updating the page html with the error message.
       setPageHtml(
         <>
-          {/* <div id='navBarLandingPageContainer'>
-            <NavBarSecond />
-          </div> */}
           <NavSpace />
           <div className="background-pink-blue" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Alert heading={"Couldn't fetch data"} body={"Check your internet connection and try again.."} />
@@ -85,12 +81,12 @@ export default function NoticeBoard() {
       );
     }
   }
-  useEffect(() => {
 
+  useEffect(() => {
     updatePageHtml();
   }, []);
 
-
+// rendering the page html.
   return (
     <>{PageHtml}</>
   );

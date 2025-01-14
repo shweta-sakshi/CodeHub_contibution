@@ -1,3 +1,6 @@
+/**
+ * Component use to show an alert message to the user.
+ */
 import React from 'react';
 import './Alert.css';
 

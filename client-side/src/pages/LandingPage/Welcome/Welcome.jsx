@@ -1,10 +1,15 @@
+/**
+ * @fileoverview Renders the welcome section of the landing page.
+ * It includes animations for the title using GSAP.
+ */
 import React from 'react'
-import "./Welcome.css"
-import CodeHubLarge from "../Assets/Logos/CodeHubLarge.png"
-import CCLogo from "../Assets/Logos/cclogo.png"
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
+
+import CodeHubLarge from "../Assets/Logos/CodeHubLarge.png"
+import CCLogo from "../Assets/Logos/cclogo.png"
+import "./Welcome.css"
 
 gsap.registerPlugin(useGSAP);
 
@@ -38,6 +43,7 @@ export default function Welcome() {
                 <div id='welcomePhotoGreetMain'>
                     <img src={CCLogo} alt='CCLogo' />
                     <p>presents</p>
+                    {/* CodeHubLarge image with animation */}
                     <img src={CodeHubLarge} alt="Code Hub" id='introTitle'/>
                 </div>
             </div>

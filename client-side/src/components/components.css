@@ -1,5 +1,8 @@
-/* This section is for RatingCard */
+/**
+    * This file contains the CSS for ImageContainer, RatingCard, and NavSpace components.
+ */
 
+/* This section is for RatingCard */
 .RatingNewbie                   { background: linear-gradient(304deg, #7A7A7A, #262525); box-shadow: 0px 0px 5px #7A7A7A;}
 .RatingPupil                    { background: linear-gradient(304deg, #55B638, #036207); box-shadow: 0px 0px 5px #55B638;}
 .RatingSpecialist               { background: linear-gradient(304deg, #1BE7D7, #4366E4); box-shadow: 0px 0px 5px #1BE7D7;}
@@ -10,7 +13,6 @@
 .RatingGrandMaster              { background: linear-gradient(304deg, #FF0000, #FF6565); box-shadow: 0px 0px 5px #FF0000;}
 .RatingInternationalGrandMaster { background: linear-gradient(304deg, #FF0000, #97001B); box-shadow: 0px 0px 5px #FF0000;}
 .RatingLegendaryGrandMaster     { background: linear-gradient(304deg, #D00000, #2C0000); box-shadow: 0px 0px 5px #D00000;}
-
 
 .RatingCard {
     margin: 5%;
@@ -77,13 +79,9 @@
     50%{background-position:100% 96%}
     100%{background-position:0% 5%}
 }
-
 /* RatingCard section ends here */
 
-
-
 /* This section is for ImageContainer */
-
 .PfpConainter {
     display: flex;
     justify-content: center;
@@ -143,12 +141,10 @@
         width: 240px;
     }
 }
-
 /* ImageContainer section ends here */
 
 
 /* NavBar section starts here */
-
 .NavSpace{
     height: 44px;
 }
@@ -157,5 +153,4 @@
         height: 64px;
     }
 }
-
 /* NavBar section ends here */

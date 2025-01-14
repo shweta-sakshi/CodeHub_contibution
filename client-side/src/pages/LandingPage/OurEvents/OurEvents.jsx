@@ -1,20 +1,23 @@
+/**
+ * @fileoverview to display the motive and achievements of the CodeHub.
+ */
 import React from 'react';
 import { useRef } from 'react';
-import "./OurEvents.css";
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import { BackgroundGradient } from '../../../components/ui/backgroundGradient';
+import "./OurEvents.css";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(useGSAP);
 
 export default function OurEvents() {
 
-    const navigate = useNavigate();
-    const EventContainer = useRef();
-
+    const navigate = useNavigate(); // For navigation to other routes.
+    const EventContainer = useRef(); // Ref for the event container.
 
     // EVENTS DEMO DATA
     const eventsData = [{
@@ -48,7 +51,6 @@ export default function OurEvents() {
     }
 ];
 
-
     return (
         <div className="my-20 ">
             <div className="text-center text-3xl  md:text-5xl font-bold text-yellow-600 mb-20">
@@ -59,9 +61,13 @@ export default function OurEvents() {
                     return (
                         <div className='w-[20rem] '>
                             <BackgroundGradient>
+
+                                {/* Event Box */}
                                 <div className='bg-gray-900 flex flex-col gap-y-5 rounded-3xl p-5 h-[20rem] overflow-auto'>
                                     <h3 className='text-white text-2xl font-medium'>{event.eventName}</h3>
                                     <p className='text-slate-400 text-lg h-[10rem] overflow-auto'>{event.summary}</p>
+
+                                    {/* if registration is open then register now button will be displayed else registration closed */}
                                     {
                                         (event.registrationStatus)
                                             ?
@@ -77,7 +83,9 @@ export default function OurEvents() {
                                                 </div>
                                             </>
                                     }
+
                                 </div>
+
                             </BackgroundGradient>
                         </div>
                     );

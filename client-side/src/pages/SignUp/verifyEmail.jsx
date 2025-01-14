@@ -19,7 +19,7 @@ function VerifyEmail() {
 
     const email = location.state?.email;
     const cfID = location.state?.cfID;
-    console.log(email)
+
     const handleVerify = async () => {
         if (!verificationCode.trim()) {
             setFormError("Please enter the verification code.");

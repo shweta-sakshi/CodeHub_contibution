@@ -1,3 +1,6 @@
+/**
+ * @file Component that displays rank card of the user in specific color based on their rank.
+ */
 import React from 'react'
 import './components.css'
 
@@ -5,6 +8,7 @@ export default function RatingCard( props) {
     const username = props.name;
     const rank = props.rank;
 
+    // set rank color based on the rank of the user to apply specific css class.
     let rankcol = 'unrated';
     let rankname = 'unrated';
     if( rank === 'newbie'){ rankcol = "RatingCard RatingNewbie"; rankname = "Newbie"; }
@@ -17,8 +21,6 @@ export default function RatingCard( props) {
     else if( rank === 'grandmaster'){ rankcol = "RatingCard RatingGrandMaster"; rankname = "Grandmaster"; }
     else if( rank === 'international grandmaster'){ rankcol = "RatingCard RatingInternationalGrandMaster"; rankname = "International Grandmaster"; }
     else if( rank === 'legendary grandmaster'){ rankcol = "RatingCard RatingLegendaryGrandMaster"; rankname = "Legendary Grandmaster"; }
-
-
 
   return (
     <div className={rankcol}>

@@ -1,7 +1,12 @@
+/**
+ * @dileoverview Submission Verdict Graph
+ */
 import React from 'react';
 import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from 'recharts';
 
 export default function VerdictGraph({ verdictdata }) {
+
+  // Transform the verdict data into an array of objects with name, fill and value properties.
   const verdictData = [
     { name: 'Challenged', value: verdictdata.CHALLENGED, fill: '#845EC2' },
     { name: 'Compilation Error', value: verdictdata.COMPILATION_ERROR, fill: '#FF6F91' },
@@ -22,10 +27,12 @@ export default function VerdictGraph({ verdictdata }) {
     { name: 'Wrong Answer [WA]', value: verdictdata.WRONG_ANSWER, fill: '#FF4B5C' },
   ];
 
+    // Calculate the total value of all verdicts.
   const totalValue = verdictData.reduce((sum, verdict) => sum + (verdict.value || 0), 0);
 
   return (
     <div className="mb-12 p-6 rounded-xl">
+
       {/* Title */}
       <h4 className="text-center text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-[#05CBDC] mb-8">
         Submission Verdicts
@@ -33,9 +40,11 @@ export default function VerdictGraph({ verdictdata }) {
 
       {/* Container */}
       <div className="flex flex-col md:flex-row items-center gap-6">
-        {/* Legend */}
+
+        {/* Legend of pie chart. */}
         <div className="bg-[#1E2230] p-4 rounded-lg backdrop-blur-md">
           <h5 className="text-lg font-semibold text-[#05CBDC] text-center mb-4">Verdict Summary</h5>
+          {/* Show only the verdicts with positive values */}
           {verdictData.map(
             (verdict, index) =>
               verdict.value > 0 && (
@@ -58,35 +67,38 @@ export default function VerdictGraph({ verdictdata }) {
           )}
         </div>
 
-        {/* Pie Chart */}
+        {/* Pie Chart container: make the chart responsive */}
         <ResponsiveContainer width="100%" height={400}>
           <PieChart>
-            <Pie
-              data={verdictData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius="80%"
-              // label={({ name, value }) => `${""}: ${(value / totalValue * 100).toFixed(1)}%`}
-              labelLine={false}
-            >
-              {verdictData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.fill} />
-              ))}
-            </Pie>
-            <Tooltip
-  formatter={(value) => `${((value / totalValue) * 100).toFixed(1)}%`}
-  contentStyle={{
-    backgroundColor: '#1E40AF', // Bright blue background (Tailwind `blue-800`)
-    borderRadius: '8px',
-    color: '#E0F2FE', // Off-white text (Tailwind `cyan-100`)
-    border: '1px solid #60A5FA', // Soft blue border (Tailwind `blue-400`)
-    padding: '8px', // Add some padding for a cleaner look
-    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
-  }}
-  cursor={{ fill: 'rgba(96, 165, 250, 0.15)' }} // Light blue hover effect (Tailwind `blue-400`)
-/>
+
+              {/* Pie chart for visualizing verdict distribution */}
+              <Pie
+                  data={verdictData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius="80%"
+                  labelLine={false}
+              >
+                  {verdictData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+              </Pie>
+
+                {/* Tooltip to display the percentage of each verdict. */}
+              <Tooltip
+                      formatter={(value) => `${((value / totalValue) * 100).toFixed(1)}%`}
+                      contentStyle={{
+                            backgroundColor: '#1E40AF', // Bright blue background (Tailwind `blue-800`)
+                            borderRadius: '8px',
+                            color: '#E0F2FE', // Off-white text (Tailwind `cyan-100`)
+                            border: '1px solid #60A5FA', // Soft blue border (Tailwind `blue-400`)
+                            padding: '8px', // Add some padding for a cleaner look
+                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
+                      }}
+                      cursor={{ fill: 'rgba(96, 165, 250, 0.15)' }} // Light blue hover effect (Tailwind `blue-400`)
+              />
 
           </PieChart>
         </ResponsiveContainer>

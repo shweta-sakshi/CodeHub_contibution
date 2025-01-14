@@ -1,3 +1,6 @@
+/**
+ * @desc It contains all the routes of the application.
+ */
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage/LandingPage";
@@ -16,11 +19,9 @@ import ProtectedRoute from './components/auth/ProtectRoute';
 import Navbar from './components/NavBar/NavBar';
 import { AuthWrapper } from './lib/AuthWrapper';
 import ForgotPassword from './pages/SignUp/ForgetPassword';
+
 export default function App() {
-
-
     return (
-
         <BrowserRouter>
             <AuthWrapper>
                 <Navbar />
@@ -28,7 +29,6 @@ export default function App() {
                     <Route path={"/"} element={<LandingPage />} />
                     <Route path={"/login"} element={<LoginPage />} />
                     <Route path={"/signUp"} element={<Signup />} />
-                    {/* Route for Forgot Password */}
                     <Route path={"/forgot-password"} element={<ForgotPassword />} />
 
                     <Route path={"/verify-email"} element={<VerifyEmail />} />
@@ -42,9 +42,9 @@ export default function App() {
                     <Route path={"/leader-board"} element={<Leaderboard />} />
                     <Route path={"/team-member"} element={<TeamMember />} />
                     <Route path={"/contact-us"} element={<ContactUs />} />
-                    <Route path= {"/get-codeforces-profile/:id"} element= {<ProtectedRoute>
+                    <Route path={"/get-codeforces-profile/:id"} element={<ProtectedRoute>
                         <DashBoard />
-                    </ProtectedRoute>}/>
+                    </ProtectedRoute>} />
                 </Routes>
             </AuthWrapper>
         </BrowserRouter >

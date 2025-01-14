@@ -1,24 +1,32 @@
-import { BackgroundBeamsWithCollision } from "../../components/ui/background_beams_with_collision";
+/**
+ * @fileoverview Verify Codeforces ID page.
+ */
 import { useState, useEffect } from "react";
-import authAPI from "../../api/authAPI";
 import { useLocation } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-function VerifyCfID() {
-    const TOTAL_TIME = 120; // Total time in seconds (2 minutes)
+import { BackgroundBeamsWithCollision } from "../../components/ui/background_beams_with_collision";
+import authAPI from "../../api/authAPI";
 
-    const problemLink = "https://codeforces.com/problemset/problem/231/A";
+function VerifyCfID() {
+
+    //
+    const TOTAL_TIME = 120; // Total time in seconds (2 minutes)
+    const problemLink = "https://codeforces.com/problemset/problem/231/A"; // Problem to be submitted and get compilation error.
+
+    // State variables
     const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
     const [timerExpired, setTimerExpired] = useState(true);
     const navigate = useNavigate();
 
     const location = useLocation();
 
+    // Codeforces ID and Problem ID
     const cfID = location.state?.cfID || "Mrinal__27";
     const problemID = "231A";
 
-
+  // Handle the timer
     useEffect(() => {
         if (timeLeft > 0 && !timerExpired) {
             const timer = setTimeout(() => {
@@ -33,6 +41,7 @@ function VerifyCfID() {
     }, [timeLeft])
 
 
+ // Check if timer is already running.
     useEffect(() => {
         const startTime = localStorage.getItem("startTime");
         if (startTime) {
@@ -51,6 +60,7 @@ function VerifyCfID() {
         }
     }, [])
 
+    // Handle the start timer button.
     async function handleStartTimer() {
         setTimeLeft(TOTAL_TIME - 1);
         setTimerExpired(false);
@@ -66,6 +76,7 @@ function VerifyCfID() {
         localStorage.setItem("startTime", currentTime);
     }
 
+    // Handle the verify button.
     async function handleVerify() {
         setTimerExpired(true);
         setTimeLeft(TOTAL_TIME);
@@ -86,6 +97,7 @@ function VerifyCfID() {
         }
     }
 
+    // Format the time in MM:SS format
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
         const secs = seconds % 60;
@@ -93,9 +105,11 @@ function VerifyCfID() {
     };
 
     return (
+        //background beams with collision effect.
         <BackgroundBeamsWithCollision>
             <div className="w-screen h-screen flex justify-center items-center text-white">
                 <div className="p-8 bg-[#0A0A2A] border-2 border-[#3E3E8E] rounded-lg shadow-lg text-center w-11/12 max-w-md">
+
                     {/* Title */}
                     <h1 className="text-3xl font-bold mb-4 text-[#D1D1FF]">Codeforces ID Verification</h1>
 
@@ -130,7 +144,7 @@ function VerifyCfID() {
                         Start Timer
                     </button>
 
-                    {/* Go to Problem Button */}
+                    {/* Problem Link */}
                     <a
                         href={problemLink}
                         target="_blank"
@@ -148,6 +162,7 @@ function VerifyCfID() {
                     >
                         {timerExpired ? "Verification Disabled" : "Verify Submission"}
                     </button>
+
                 </div>
                 <Toaster />
             </div>

@@ -1,15 +1,15 @@
-const User = require("../../../model/userModel");
-const tempUser = require("../../../model/tempUserModel");
-
 const AsyncErrorHandler = require("../../../ErrorHandlers/async_error_handler");
 const CfVerificationRequestToken = require("../../../model/cfVerificationRequestModel")
+const User = require("../../../model/userModel");
 
 
+/**
+ * @desc Generate a request token for codeforces ID verification.
+ */
 const generateCfVerificationRequestToken = AsyncErrorHandler(async (req, res, next) => {
     const { problemID, cfID, requestTime } = req.body;
 
-    console.log(problemID, cfID, requestTime);
-    //Input validation
+    //Input validation.
     if (!problemID || !cfID || !requestTime) {
         return res.status(400).json({ success: false, message: "Invalid request ! Missing required fields" });
     }
@@ -34,27 +34,26 @@ const generateCfVerificationRequestToken = AsyncErrorHandler(async (req, res, ne
         //Check if user has already requested for cfID verification
         const existingRequest = await CfVerificationRequestToken.findOne({ cfID, problemID });
         if (existingRequest) {
-            //Check if the request is still valid by calculating the time difference
-            //between new request time and the request time of the existing request
+            //check if existing request is still valid (is of less than 2 minutes).
             const timeDifference = new Date(requestTime) - new Date(existingRequest.requestTime);
-            //If time difference less then 2 minutes then discard the request
             if (timeDifference < 120000) {
                 return res.status(400).json({ success: false, message: "Request already exists" });
             }
             else {
-                //Delete the existing request
+                //Delete the existing request(it is expired).
                 await CfVerificationRequestToken.deleteOne({ cfID, problemID });
             }
         }
 
-        //Create new request token
+        //Create new codeforces verification request token.
         const newRequest = new CfVerificationRequestToken({ cfID, problemID, requestTime });
         await newRequest.save();
 
-        //Success response to client
+        //send success response.
         res.status(200).json({ success: true, message: "Request token generated successfully" });
 
     } catch (error) {
+        //Error response to custom Async error handler.
         next(error);
     }
 

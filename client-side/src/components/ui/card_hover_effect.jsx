@@ -1,8 +1,15 @@
-import { cn } from "../../lib/utils";
+/**
+ * @fileoverview Card Format with Hover Effect component.
+ * not used in the project.
+ */
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
+import { cn } from "../../lib/utils";
 
+/**
+ * @description Hover Effect Component.
+ */
 export const HoverEffect = ({
   items,
   className
@@ -19,6 +26,8 @@ export const HoverEffect = ({
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
           onClick={()=>{window.location.href = item.link}}>
+
+            {/* Hover Background animation */}
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
@@ -35,16 +44,22 @@ export const HoverEffect = ({
                 }} />
             )}
           </AnimatePresence>
+
+          {/* Card */}
           <Card>
             <CardTitle>{item.title}</CardTitle>
             <CardDescription>{item.description}</CardDescription>
           </Card>
+
         </div>
       ))}
     </div>)
   );
 };
 
+/**
+ * @description Card provider Component.
+ */
 export const Card = ({
   className,
   children
@@ -61,6 +76,10 @@ export const Card = ({
     </div>)
   );
 };
+
+/**
+ * @description Card Title Component.
+ */
 export const CardTitle = ({
   className,
   children
@@ -71,6 +90,10 @@ export const CardTitle = ({
     </h4>)
   );
 };
+
+/**'
+ * @description Card Description Component.
+ */
 export const CardDescription = ({
   className,
   children

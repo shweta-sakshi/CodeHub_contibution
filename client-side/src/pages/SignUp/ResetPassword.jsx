@@ -1,12 +1,22 @@
+/**
+ * @fileoverview Reset Password page - step 3 of ForgetPassword.
+ */
 import React, { useState } from "react";
-import API from "../../api/forgetPassword";
 import { useNavigate } from "react-router-dom";
+
+import API from "../../api/forgetPassword";
+
 function ResetPassword({toast}) {
+
+    //manage state.
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-    const api = new API();
+
+    const navigate = useNavigate();//navigate to the specified route.
+    const api = new API(); //create an instance of API class.
+
+    //handle the form submission.
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password !== confirmPassword) {
@@ -15,6 +25,7 @@ function ResetPassword({toast}) {
         }
         setLoading(true);
         try {
+            //call resetPassword method from API class.
             await api.resetPassword(password);
             toast.success("Password reset successfully!");
             navigate("/login")
@@ -28,7 +39,9 @@ function ResetPassword({toast}) {
     return (
         <div className="max-w-md w-full mx-auto rounded-lg p-6 shadow-2xl bg-[#121232]">
             <h1 className="text-3xl font-bold text-center mb-6">Reset Password</h1>
+
             <form onSubmit={handleSubmit}>
+                {/* New Password */}
                 <div className="mb-4">
                     <label className="block text-sm font-semibold mb-2">New Password</label>
                     <input
@@ -40,6 +53,8 @@ function ResetPassword({toast}) {
                         required
                     />
                 </div>
+
+                {/* Confirm Password */}
                 <div className="mb-4">
                     <label className="block text-sm font-semibold mb-2">Confirm Password</label>
                     <input
@@ -51,6 +66,8 @@ function ResetPassword({toast}) {
                         required
                     />
                 </div>
+
+                {/* Reset Password Button */}
                 <button
                     type="submit"
                     className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded transition"
@@ -58,6 +75,7 @@ function ResetPassword({toast}) {
                 >
                     {loading ? "Resetting..." : "Reset Password"}
                 </button>
+
             </form>
         </div>
     );

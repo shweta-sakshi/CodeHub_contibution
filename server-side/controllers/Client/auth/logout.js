@@ -1,10 +1,14 @@
 const ClientSessions = require("../../../model/clientSessionModel");
 const AsyncErrorHandler = require("../../../ErrorHandlers/async_error_handler");
 
+/**
+ * Logout controller
+ * @description Logout client by deleting active session and client side cookies.
+ */
 const Logout = AsyncErrorHandler(async (req, res, next) => {
     const { cookieID, userId } = req.decoded;
 
-    // Validate input
+    // Validate input.
     if (!cookieID || !userId) {
         return res.status(400).json({
             success: false,
@@ -23,7 +27,7 @@ const Logout = AsyncErrorHandler(async (req, res, next) => {
         });
     }
 
-    // Clear the cookie
+    // Clear the client side cookie.
     res.clearCookie("jwt", {
         httpOnly: true,
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",

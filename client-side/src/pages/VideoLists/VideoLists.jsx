@@ -1,14 +1,18 @@
+/**
+ * @fileoverview VideoLists page displays the list of videos based on the category selected by the user.
+ */
 import React, { useEffect, useState } from 'react';
-import './VideoLists.css';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+
 import NavSpace from '../../components/NavSpace';
 import Spinner from '../../components/Spinner/Spinner';
-import axios from 'axios';
 import NavBarSecond from '../../components/NavBar/NavBarSecond';
 import Alert from '../../components/Alert/Alert';
 import Footer from '../../components/Footer/Footer';
-import { useLocation } from 'react-router-dom';
+import './VideoLists.css';
 
-
+//format of the video tile displayed in the video list.
 function VideoTile(props) {
     return (
         <div className='videoTile'>
@@ -30,22 +34,25 @@ export default function VideoLists(props) {
         <NavSpace />
         <Spinner />
     </>);
-    
 
+    //fetch the videos based on the category selected by the user.
     const updatePageHtml = async () => {
         try {
+            //fetch the category selected by the user.
             const searchParams = new URLSearchParams(location.search);
             const educationCategory = searchParams.get('category');
+
+            //fetch videos.
             const user = await JSON.parse(localStorage.getItem(process.env.CODETOGETHER_APP_LOCALHOST_KEY));
-            const VideoAPIresponse = await axios.post(process.env.REACT_APP_SERVER_PATH + '/education/videos', { categoryID : educationCategory , cfID: user.cfID }, { withCredentials: true });
-            console.log( educationCategory);
+            const VideoAPIresponse = await axios.post(process.env.REACT_APP_SERVER_PATH + '/education/videos', { categoryID: educationCategory, cfID: user.cfID }, { withCredentials: true });
             const VideoInfo = VideoAPIresponse.data.data;
 
-            console.log( VideoInfo);
-
+            //format the fetched videos according to the VideoTile component.
             const VideoLists = VideoInfo.map((video, index) =>
                 <VideoTile key={index} title={video.title} date={video.date} ytLink={video.ytLink} _id={video._id} />
             );
+
+            //set the page html with the fetched videos.
             setPageHtml(<>
                 <div>
                     <div className="background-pink-blue" style={{ minHeight: '100vh' }}>
@@ -62,6 +69,7 @@ export default function VideoLists(props) {
                 </div>
             </>);
         } catch (err) {
+            //if there is an error in fetching the videos, display an alert.
             setPageHtml(
                 <>
                     <div id='navBarLandingPageContainer'>
@@ -78,11 +86,10 @@ export default function VideoLists(props) {
     }
 
     useEffect(() => {
-
         updatePageHtml();
     }, []);
 
-
+    //return the page html.
     return (
         <>
             {PageHtml}

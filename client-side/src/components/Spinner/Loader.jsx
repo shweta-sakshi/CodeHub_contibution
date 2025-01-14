@@ -1,3 +1,6 @@
+/**
+ * @description Loader component to show ongoing process.
+ */
 function Loader() {
     return (
         <div className="flex justify-center mb-4">

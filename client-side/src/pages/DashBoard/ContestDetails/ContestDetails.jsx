@@ -1,6 +1,12 @@
+/**
+ * @fileoverview Component displays the details of the contests that the user has participated in.
+ */
 import React from 'react';
 import "./ContestDetails.css";
 
+/**
+ * @description contest card component with rating change details.
+ */
 function ContestCard(props) {
 
     let ratingChangeColor = props.ratingGain >= 0 ? 'green' : 'red';
@@ -8,7 +14,6 @@ function ContestCard(props) {
 
     let ratingGain = props.ratingGain;
     if (ratingGain < 0) ratingGain *= -1;
-
 
     return (
         <div className='contestCard'>
@@ -28,6 +33,9 @@ function ContestCard(props) {
 }
 
 
+/**
+ * @description ContestDetails component displays the details of the contests that the user has participated in.
+ */
 export default function ContestDetails(props) {
     var tempcontestCards = props.contestData;
     let n = tempcontestCards.length;

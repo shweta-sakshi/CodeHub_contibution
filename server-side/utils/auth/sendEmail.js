@@ -1,6 +1,11 @@
 const nodemailer = require("nodemailer")
 
+/**
+ * @desc Send Email function.
+ */
 async function SendEmail(to, subject, text) {
+
+    // Create a transporter object using the default SMTP transport.
     let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -9,16 +14,17 @@ async function SendEmail(to, subject, text) {
         },
     });
 
+    // Create mail options object to send email with the given information.
     let mailOptions = {
         from: process.env.EMAIL,
         to: to,
         subject: subject,
-        html: text,
+        html: text, // html body
     };
 
     try {
+        // Send email.
         let info = await transporter.sendMail(mailOptions);
-        console.log("Email sent: " + info.response);
     } catch (error) {
         console.error("Error sending email: " + error);
     }

@@ -1,8 +1,9 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
-const colors = require("tailwindcss/colors");
+/**
+ * @type {import('tailwindcss').TailwindConfig}
+ * @see https://tailwindcss.com/docs/configuration
+ */
 const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenColorPalette");
 
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
@@ -38,11 +39,14 @@ module.exports = {
     },
   },
   plugins: [
-    addVariablesForColors,
+    addVariablesForColors, // Add custom css variables for all colors in theme.
   ],
 };
 
-// This plugin adds each Tailwind color as a global CSS variable, e.g., var(--gray-200).
+/**
+ * @desc Give custom key to all the color in theme and add them as css variables.
+ * @example `primary` color will be available as `--primary`, `secondary` as `--secondary` and so on.
+ */
 function addVariablesForColors({ addBase, theme }) {
   const allColors = flattenColorPalette(theme("colors"));
   const newVars = Object.fromEntries(

@@ -1,4 +1,6 @@
-/* CSS for Contest details. */
+/**
+  * @description CSS for ContestDetails component.
+ */
 
 .ContestDetailsContainer {
     border-radius: 7px;
@@ -18,7 +20,6 @@
 }
 
 /* CSS for ContestCard */
-
 .contestCard {
     background-image: linear-gradient(to top right, #d9d9d9, #f9f9f9);
     padding: 15px;

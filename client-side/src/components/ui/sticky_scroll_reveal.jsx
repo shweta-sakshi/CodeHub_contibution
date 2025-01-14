@@ -1,25 +1,33 @@
+/**
+ * @fileoverview Renders a scrollable container with animated content and background.
+ * @purpose to display objective of the CodeHub.
+ */
 import React, { useEffect, useRef, useState } from "react";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { motion } from "framer-motion";
+
 import { cn } from "../../lib/utils";
 
+/**
+ * @desc Renders a scrollable container with animated content and background.
+ */
 export const StickyScroll = ({
   content,
   contentClassName,
   image
 }) => {
+
   const [activeCard, setActiveCard] = React.useState(0);
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
-    // uncomment line 22 and comment line 23 if you DONT want the overflow container and want to have it change on the entire page scroll
-    // target: ref
     container: ref,
     offset: ["start start", "end start"],
   });
-  const cardLength = content.length;
+  const cardLength = content.length; // Total number of content cards.
 
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const cardsBreakpoints = content.map((_, index) => index / cardLength);
+    // Calculate the scroll breakpoints for each card.
     const closestBreakpointIndex = cardsBreakpoints.reduce((acc, breakpoint, index) => {
       const distance = Math.abs(latest - breakpoint);
       if (distance < Math.abs(latest - cardsBreakpoints[acc])) {
@@ -27,12 +35,15 @@ export const StickyScroll = ({
       }
       return acc;
     }, 0);
-    setActiveCard(closestBreakpointIndex);
+    setActiveCard(closestBreakpointIndex); //update active card.
   });
 
+  //background colors for the container.
   const backgroundColors = [
     "black",
   ];
+
+  //list of Linear gradients.
   const linearGradients = [
     "linear-gradient(to bottom right, var(--cyan-500), var(--emerald-500))",
     "linear-gradient(to bottom right, var(--pink-500), var(--indigo-500))",
@@ -41,11 +52,14 @@ export const StickyScroll = ({
 
   const [backgroundGradient, setBackgroundGradient] = useState(linearGradients[0]);
 
+  //update the gradient based on the active card.
   useEffect(() => {
     setBackgroundGradient(linearGradients[activeCard % linearGradients.length]);
   }, [activeCard]);
 
   return (
+
+    // Render the container with the content .
     (<motion.div
       animate={{
         backgroundColor: backgroundColors[activeCard % backgroundColors.length],
@@ -83,6 +97,8 @@ export const StickyScroll = ({
           <div className="h-40" />
         </div>
       </div>
+
+      {/* Render the image or content based on the active card. */}
       {image ? (
         <div
           style={{ boxShadow: backgroundGradient }}
@@ -102,6 +118,7 @@ export const StickyScroll = ({
           )}>
           {content[activeCard].content ?? null}
         </div>}
+
     </motion.div >)
   );
 };

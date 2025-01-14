@@ -1,15 +1,21 @@
+const axios = require("axios");
+
 const User = require("../../../model/userModel");
 const tempUser = require("../../../model/tempUserModel");
 
 const AsyncErrorHandler = require("../../../ErrorHandlers/async_error_handler");
 const CfVerificationRequestToken = require("../../../model/cfVerificationRequestModel")
-const axios = require("axios");
 
+
+/**
+ * @description verify codeforces ID.
+ *  Verify codeforces ID by checking user's last submission in codeforces.
+ *  User must have submitted the first problem of contest 231 with verdict "COMPILATION_ERROR" within 2 minutes of request for verification.
+ */
 const VerifyCfID = AsyncErrorHandler(async (req, res, next) => {
     const { cfID, problemID } = req.body;
 
-    console.log(cfID, problemID);
-
+    //Input validation.
     if (!cfID) {
         return res.status(400).json({ success: false, message: "cfID is required" });
     }
@@ -35,36 +41,33 @@ const VerifyCfID = AsyncErrorHandler(async (req, res, next) => {
         const verificationRequestToken = await CfVerificationRequestToken.findOne({
             cfID, problemID
         })
-
         if (!verificationRequestToken) {
             return res.status(400).json({ success: false, message: "Invalid verification request" });
         }
 
-        console.log("Verification request token found");
-
         try {
-            //Check users submission status using codeforces API
+            //fetch user's last submission from codeforces API.
             const cfResponse = await axios.get(` https://codeforces.com/api/user.status?handle=${cfID}&from=1&count=1`);
             if (!cfResponse.data || cfResponse.data.status !== 'OK') {
                 return res.status(400).json({ success: false, message: "Invalid codeforces ID" });
             }
+            //Check if last submitted problem belong to contest 231 and problem A(first problem of the contest).
             else if (cfResponse.data.result[0].problem.contestId !== 231 || cfResponse.data.result[0].problem.index !== "A") {
                 return res.status(400).json({ success: false, message: "Problem mismatched" });
             }
-
+            //Check if submission verdict is compilation error or not.
             else if (cfResponse.data.result[0].verdict !== 'COMPILATION_ERROR') {
-                return res.status(400).json({ success: false, message: "VErdict not matched" });
+                return res.status(400).json({ success: false, message: "Verdict not matched" });
             }
 
-            //Check if submission was made within 2 minutes of request for verification
-
-            //Calulate time difference between submission and verification request
+            //Check if submission time is within 2 minutes of request for verification.
             let submissionTime = cfResponse.data.result[0].creationTimeSeconds;
             submissionTime = new Date(submissionTime * 1000);
             const requestTime = verificationRequestToken.requestTime;
 
+            //Calculate time difference between submission and verification request time.
             const timeDifference = submissionTime - requestTime;
-            const timeDifferenceInMinutes = timeDifference / (1000 * 60);
+            const timeDifferenceInMinutes = timeDifference / (1000 * 60); //Convert time difference to minutes
 
             //Delete the verification request token
             await verificationRequestToken.deleteOne({ _id: verificationRequestToken._id });
@@ -100,10 +103,9 @@ const VerifyCfID = AsyncErrorHandler(async (req, res, next) => {
 
     }
     catch (error) {
+        //Error response to custom Async error handler.
         next(error);
     }
 })
-
-
 
 module.exports = VerifyCfID;

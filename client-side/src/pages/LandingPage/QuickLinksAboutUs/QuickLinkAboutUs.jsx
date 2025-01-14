@@ -1,41 +1,29 @@
+/**
+ * @fileoverview provide useful links and information about the CodeHub.
+ */
 import React from 'react';
-import "./QuickLinkAboutUs.css";
 import { useNavigate } from 'react-router-dom';
 import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import "./QuickLinkAboutUs.css";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.registerPlugin(useGSAP);
 
 export default function QuickLinkAboutUs() {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate();// For navigation to other routes.
 
-    const linkContainer = useRef();
+    const linkContainer = useRef(); // Ref for the link container.
 
-    // useGSAP(() => {
-    //         gsap.from('#aa', {
-    //             x: window.innerWidth,
-    //             scrollTrigger: {
-    //                 trigger: "#aboutContainer",
-    //                 // scrub: 1,
-    //                 markers: true,
-    //                 start: "top 30%",
-    //                 end: "top 70%"
-    //             }
-    //         });
-            
-    //     },
-    //     { scope: linkContainer }
-    // ); 
-    
     return (
         <div id='quickLinksAboutUsMain'>
             <div style={{ height : '15vh'}}></div>
-            {/* --------------QUICK LINKS---------------- */}
+
+            {/* QUICK LINKS */}
             <div id='quickLinksBoxMain' ref={linkContainer}>
                 <div onClick={() => window.location.href = "https://discord.gg/n47J3fxa"} className='quickLinksBoxContents' id='aa'>
                     Join our Discord Server
@@ -50,9 +38,10 @@ export default function QuickLinkAboutUs() {
                     Visit our Education Section
                 </div>
             </div>
-            {/* ------------------END-------------------- */}
+
             <div style={{ height : '15vh'}}></div>
-            {/* --------------ABOUT US---------------- */}
+
+            {/* ABOUT US */}
             <div id='aboutUsMain'>
                 <div id='aboutUsTitleMain'>
                     About CodeHub
@@ -61,7 +50,7 @@ export default function QuickLinkAboutUs() {
                 CodeHub is a comprehensive online platform developed by the Computer Coding Club at MNNIT to support its events, workshops, seminars, and more. Serving as the central hub for all club activities, CodeHub offers easy access to resources and updates related to the club's initiatives. Additionally, the platform features a detailed CodeForces ranking system, tailored to foster a competitive coding environment within the college community.
                 </div>
             </div>
-            {/* ------------------END-------------------- */}
+
         </div>
     )
 }

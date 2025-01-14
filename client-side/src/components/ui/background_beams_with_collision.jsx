@@ -1,7 +1,15 @@
-import { cn } from "../../lib/utils";
+/**
+ * @fileoverview To create animated beams with collision detection and explosion effects in the background.
+ */
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useRef, useState, useEffect } from "react";
 
+import { cn } from "../../lib/utils";
+
+
+/**
+ * @description Component for background beams with collision detection and explosion effects.
+ */
 export const BackgroundBeamsWithCollision = ({
     children,
     className
@@ -9,6 +17,7 @@ export const BackgroundBeamsWithCollision = ({
     const containerRef = useRef(null);
     const parentRef = useRef(null);
 
+    // Beams configuration.
     const beams = [
         {
             initialX: 10,
@@ -67,7 +76,6 @@ export const BackgroundBeamsWithCollision = ({
             ref={parentRef}
             className={cn(
                 " h-auto bg-gradient-to-b from-black to-primary relative flex items-center w-full justify-center overflow-hidden",
-                // h-screen if you want bigger
                 className
             )}>
             {beams.map((beam) => (
@@ -89,8 +97,13 @@ export const BackgroundBeamsWithCollision = ({
     );
 };
 
+
+/**
+ * @description Handle the animation and collision detection for a single beam.
+ */
 const CollisionMechanism = React.forwardRef(({ parentRef, containerRef, beamOptions = {} }, ref) => {
     const beamRef = useRef(null);
+    // State for collision detection.
     const [collision, setCollision] = useState({
         detected: false,
         coordinates: null,
@@ -98,6 +111,7 @@ const CollisionMechanism = React.forwardRef(({ parentRef, containerRef, beamOpti
     const [beamKey, setBeamKey] = useState(0);
     const [cycleCollisionDetected, setCycleCollisionDetected] = useState(false);
 
+    // Check for collision on every frame.
     useEffect(() => {
         const checkCollision = () => {
             if (
@@ -132,6 +146,7 @@ const CollisionMechanism = React.forwardRef(({ parentRef, containerRef, beamOpti
         return () => clearInterval(animationInterval);
     }, [cycleCollisionDetected, containerRef]);
 
+    // Reset the collision state after 2 seconds.
     useEffect(() => {
         if (collision.detected && collision.coordinates) {
             setTimeout(() => {
@@ -145,7 +160,9 @@ const CollisionMechanism = React.forwardRef(({ parentRef, containerRef, beamOpti
         }
     }, [collision]);
 
+    // Render the beam and explosion effect.
     return (<>
+        {/* Beam animation */}
         <motion.div
             key={beamKey}
             ref={beamRef}
@@ -174,6 +191,8 @@ const CollisionMechanism = React.forwardRef(({ parentRef, containerRef, beamOpti
                 "absolute left-0 top-20 m-auto h-14 w-px rounded-full bg-gradient-to-t from-indigo-500 via-purple-500 to-transparent",
                 beamOptions.className
             )} />
+
+        {/* Collision explosion effect */}
         <AnimatePresence>
             {collision.detected && collision.coordinates && (
                 <Explosion
@@ -191,9 +210,14 @@ const CollisionMechanism = React.forwardRef(({ parentRef, containerRef, beamOpti
 
 CollisionMechanism.displayName = "CollisionMechanism";
 
+/**
+ * @description Component for explosion effect at the point of collision.
+ */
 const Explosion = ({
     ...props
 }) => {
+
+    // Create a list of spans with random initial and final positions
     const spans = Array.from({ length: 20 }, (_, index) => ({
         id: index,
         initialX: 0,
