@@ -17,12 +17,9 @@ import Alert from '../../components/Alert/Alert';
 import Footer from '../../components/Footer/Footer';
 import UserProfile from "../../components/Dashboard/UserProfile";
 import ContestDetails from '../../components/Dashboard/Contestcard';
-<<<<<<< HEAD
 import Heatmap from './HeatMap/HeatMap';
-=======
 import '../../pages/pages.css';
 import './UserHome.css';
->>>>>>> origin/pr/77
 
 export default function UserHome() {
 
