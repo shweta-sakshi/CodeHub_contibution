@@ -9,7 +9,6 @@ import axios from 'axios';
 import Spinner from '../../components/Spinner/Spinner';
 import NavSpace from '../../components/NavSpace';
 import Alert from '../../components/Alert/Alert';
-import NavBarSecond from '../../components/NavBar/NavBarSecond';
 import Footer from '../../components/Footer/Footer';
 import '../pages.css';
 import './Education.css';
@@ -55,9 +54,6 @@ export default function Education() {
             // Setting the page html.
             setPageHtml(<>
                 <div className="background-pink-blue">
-                    <div id='navBarLandingPageContainer'>
-                        <NavBarSecond />
-                    </div>
                     <NavSpace />
                     <div className='education-heading'>Education</div>
                     <div className='EducationOuterContainer'>
@@ -73,9 +69,6 @@ export default function Education() {
             // Setting the page html in case of error.
             setPageHtml(
                 <>
-                    <div id='navBarLandingPageContainer'>
-                        <NavBarSecond />
-                    </div>
                     <NavSpace />
                     <div className="background-pink-blue" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <Alert heading={"Couldn't fetch data"} body={"Check your internet connection and try again.."} />
